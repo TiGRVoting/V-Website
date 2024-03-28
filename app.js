@@ -92,3 +92,14 @@ function countTrueValues(obj) {
 
 // Call the function to populate the table when the page loads
 window.onload = populateTable;
+
+// Function to open the lightbox
+function openLightbox() {
+    document.getElementById('lightbox').style.display = 'block';
+    // Fetch and display top voted candidates here
+}
+
+// Function to close the lightbox
+function closeLightbox() {
+    document.getElementById('lightbox').style.display = 'none';
+}
