@@ -1,0 +1,225 @@
+{
+    "Admin": {
+      "2246": {
+        "House": "Oak",
+        "ID": "2246",
+        "Name": "Abhishek S",
+        "Password": "0776",
+        "Voted": false
+      },
+      "1737": {
+        "House": "Pine",
+        "ID": "1737",
+        "Name": "Adithya M",
+        "Password": "4595",
+        "Voted": false
+      },
+      "1798": {
+        "House": "Pine",
+        "ID": "1798",
+        "Name": "Akshay Srinivasan",
+        "Password": "8563",
+        "Voted": false
+      },
+      "2459": {
+        "House": "Oak",
+        "ID": "2459",
+        "Name": "Ananya Hariharan",
+        "Password": "1156",
+        "Voted": false
+      },
+      "1814": {
+        "House": "Pine",
+        "ID": "1814",
+        "Name": "Arjun Jayaprakash",
+        "Password": "1613",
+        "Voted": false
+      },
+      "1884": {
+        "House": "Cedar",
+        "ID": "1884",
+        "Name": "Dharshini Priya C P",
+        "Password": "1155",
+        "Voted": false
+      },
+      "1824": {
+        "House": "Maple",
+        "ID": "1824",
+        "Name": "Guru Dhaksan M",
+        "Password": "1607",
+        "Voted": false
+      },
+      "4172": {
+        "House": "Cedar",
+        "ID": "4172",
+        "Name": "Haran Sivashankar",
+        "Password": "8643",
+        "Voted": false
+      },
+      "1825": {
+        "House": "Maple",
+        "ID": "1825",
+        "Name": "Hari Krishna R",
+        "Password": "1621",
+        "Voted": false
+      },
+      "1826": {
+        "House": "Pine",
+        "ID": "1826",
+        "Name": "Harsh C",
+        "Password": "9269",
+        "Voted": false
+      },
+      "1892": {
+        "House": "Maple",
+        "ID": "1892",
+        "Name": "Jonisha J C",
+        "Password": "5443",
+        "Voted": false
+      },
+      "1893": {
+        "House": "Oak",
+        "ID": "1893",
+        "Name": "Jovitaa Vimal",
+        "Password": "0969",
+        "Voted": false
+      },
+      "1830": {
+        "House": "Oak",
+        "ID": "1830",
+        "Name": "Kaushik Praveen M",
+        "Password": "3736",
+        "Voted": false
+      },
+      "1904": {
+        "House": "Maple",
+        "ID": "1904",
+        "Name": "Pavithra M",
+        "Password": "2163",
+        "Voted": false
+      },
+      "2238": {
+        "House": "Pine",
+        "ID": "2238",
+        "Name": "Pragadeesh A P",
+        "Password": "3162",
+        "Voted": false
+      },
+      "1908": {
+        "House": "Pine",
+        "ID": "1908",
+        "Name": "Rithanya S",
+        "Password": "0345",
+        "Voted": false
+      },
+      "1850": {
+        "House": "Oak",
+        "ID": "1850",
+        "Name": "Rithik Abhay A R",
+        "Password": "5112",
+        "Voted": false
+      },
+      "3360": {
+        "House": "Pine",
+        "ID": "3360",
+        "Name": "Sanjit Govindaraj M",
+        "Password": "0726",
+        "Voted": false
+      },
+      "3573": {
+        "House": "Oak",
+        "ID": "3573",
+        "Name": "Tanvi Vinod",
+        "Password": "9605",
+        "Voted": false
+      },
+      "1865": {
+        "House": "Cedar",
+        "ID": "1865",
+        "Name": "Tarun Kumaar M S",
+        "Password": "6089",
+        "Voted": false
+      },
+      "2687": {
+        "House": "Maple",
+        "ID": "2687",
+        "Name": "Tharunika",
+        "Password": "3151",
+        "Voted": false
+      },
+      "1726": {
+        "House": "Maple",
+        "ID": "1726",
+        "Name": "Thilak M",
+        "Password": "4286",
+        "Voted": false
+      },
+      "1868": {
+        "House": "Pine",
+        "ID": "1868",
+        "Name": "Thrivikram R Krishna",
+        "Password": "6591",
+        "Voted": false
+      },
+      "1873": {
+        "House": "Maple",
+        "ID": "1873",
+        "Name": "Vishnu Prasad S",
+        "Password": "1840",
+        "Voted": false
+      },
+      "1936": {
+        "House": "Cedar",
+        "ID": "1936",
+        "Name": "Yashitha R",
+        "Password": "8764",
+        "Voted": false
+      }
+    },
+    "result": {
+        "cedar_captain_cont1": 0,
+        "cedar_captain_cont2": 0,
+        "cedar_captain_cont3": 0,
+        "cedar_captain_cont4": 0,
+        "cedar_vc_cont1": 0,
+        "cedar_vc_cont2": 0,
+        "cedar_vc_cont3": 0,
+        "cedar_vc_cont4": 0,
+        "maple_captain_cont1": 0,
+        "maple_captain_cont2": 0,
+        "maple_captain_cont3": 0,
+        "maple_captain_cont4": 0,
+        "maple_vc_cont1": 0,
+        "maple_vc_cont2": 0,
+        "maple_vc_cont3": 0,
+        "maple_vc_cont4": 0,
+        "oak_captain_cont1": 0,
+        "oak_captain_cont2": 0,
+        "oak_captain_cont3": 0,
+        "oak_captain_cont4": 0,
+        "oak_vc_cont1": 0,
+        "oak_vc_cont2": 0,
+        "oak_vc_cont3": 0,
+        "oak_vc_cont4": 0,
+        "pine_captain_cont1": 0,
+        "pine_captain_cont2": 0,
+        "pine_captain_cont3": 0,
+        "pine_captain_cont4": 0,
+        "pine_vc_cont1": 0,
+        "pine_vc_cont2": 0,
+        "pine_vc_cont3": 0,
+        "pine_vc_cont4": 0,
+        "prefect_boy_cont1": 0,
+        "prefect_boy_cont2": 0,
+        "prefect_boy_cont3": 0,
+        "prefect_boy_cont4": 0,
+        "prefect_girl_cont1": 0,
+        "prefect_girl_cont2": 0,
+        "prefect_girl_cont3": 0,
+        "prefect_girl_cont4": 0,
+        "student_council_cont1": 0,
+        "student_council_cont2": 0,
+        "student_council_cont3": 0,
+        "student_council_cont4": 0
+    }
+}    

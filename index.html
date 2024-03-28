@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Election Results 24-25</title>
+    <link rel="icon" type="image/png" href="favicon.png"> <!-- Add this line for favicon -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('Images/website.jpg'); /* Updated image path */
+            background-size: cover;
+            background-position: top center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-y: hidden;
+        }
+        .container {
+            width: 74%; /* Adjust the width of the container */
+            max-height: 600px; /* Adjust the maximum height of the container */
+            overflow-y: auto; /* Add vertical scrollbar when necessary */
+            box-shadow: 0px 5px 20px;
+            padding: 20px; /* Adjust padding as needed */
+            margin-top: 600px; /* Adjust margin-top to change the position */
+            margin-bottom: 320px; /* Adjust margin-bottom to change the position */
+            margin-left: auto; /* Align the container to the center horizontally */
+            margin-right: auto; /* Align the container to the center horizontally */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            top: 0;
+            z-index: 2; /* Ensure headings stay above table cells */
+        }
+
+        th, td {
+            padding: 20px; /* Reduce padding */
+            border: 15px solid #ddd;
+            border-width: 1.5px;
+            text-align: center;
+            font-size: 17px; /* Reduce font size */
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; /* Use a more readable font family */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Candidate</th>
+                    <th>Number of votes</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <!-- Table data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
