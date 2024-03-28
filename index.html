@@ -20,7 +20,6 @@
             justify-content: center;
             align-items: center;
             overflow-y: hidden;
-            color: white; /* Change text color to white */
         }
         .container {
             width: 74%; /* Adjust the width of the container */
@@ -40,64 +39,18 @@
         }
 
         th {
-            background-color: #000000;
+            background-color: #f2f2f2;
             top: 0;
             z-index: 2; /* Ensure headings stay above table cells */
-            color: white; /* Change text color to white */
         }
 
         th, td {
             padding: 20px; /* Reduce padding */
-            border: 15px solid #000000;
+            border: 15px solid #ddd;
             border-width: 1.5px;
             text-align: center;
             font-size: 17px; /* Reduce font size */
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; /* Use a more readable font family */
-            color: white; /* Change text color to white */
-        }
-
-        /* Lightbox Styles */
-        .lightbox-container {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
-            z-index: 999; /* Ensure lightbox is above other content */
-        }
-
-        .lightbox-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #ffffff; /* White background */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5); /* Box shadow for a raised effect */
-        }
-
-        .close-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-        }
-
-        /* Button Styles */
-        .open-lightbox-button {
-            position: absolute;
-            top: 10px; /* Adjust top position */
-            left: 50%; /* Center horizontally */
-            transform: translateX(-50%); /* Center horizontally */
-            background-color: #000000;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
         }
     </style>
 </head>
@@ -115,33 +68,6 @@
             </tbody>
         </table>
     </div>
-    
-    <!-- Button to open lightbox -->
-    <button class="open-lightbox-button" onclick="openLightbox()">Show Top Voted Candidates</button>
-
-    <!-- Lightbox Container -->
-    <div class="lightbox-container" id="lightbox">
-        <div class="lightbox-content">
-            <h2>Top Voted Candidates</h2>
-            <p id="highest-voted-candidates"></p>
-            <!-- Close button for the lightbox -->
-            <span class="close-button" onclick="closeLightbox()">Close</span>
-        </div>
-    </div>
-
     <script type="module" src="app.js"></script>
-    
-    <script>
-        // Function to open the lightbox
-        function openLightbox() {
-            document.getElementById('lightbox').style.display = 'block';
-            // Fetch and display top voted candidates here
-        }
-
-        // Function to close the lightbox
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-        }
-    </script>
 </body>
 </html>
