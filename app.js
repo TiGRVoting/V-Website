@@ -89,48 +89,6 @@ function populateTable() {
 function countTrueValues(obj) {
     return Object.values(obj).filter(value => value === true).length;
 }
-function openLightbox() {
-    document.getElementById('lightbox').style.display = 'block';
-    // Fetch and display top voted candidates for each category
-    getTopCandidates();
-}
-
-// Function to fetch top voted candidates for each category and display in lightbox
-function getTopCandidates() {
-    const categories = [
-        "cedar_captain_cont1", "cedar_captain_cont2", "cedar_captain_cont3", "cedar_captain_cont4",
-        "cedar_vc_cont1", "cedar_vc_cont2", "cedar_vc_cont3", "cedar_vc_cont4",
-        "maple_captain_cont1", "maple_captain_cont2", "maple_captain_cont3", "maple_captain_cont4",
-        "maple_vc_cont1", "maple_vc_cont2", "maple_vc_cont3", "maple_vc_cont4",
-        "oak_captain_cont1", "oak_captain_cont2", "oak_captain_cont3", "oak_captain_cont4",
-        "oak_vc_cont1", "oak_vc_cont2", "oak_vc_cont3", "oak_vc_cont4",
-        "pine_captain_cont1", "pine_captain_cont2", "pine_captain_cont3", "pine_captain_cont4",
-        "pine_vc_cont1", "pine_vc_cont2", "pine_vc_cont3", "pine_vc_cont4",
-        "prefect_boy_cont1", "prefect_boy_cont2", "prefect_boy_cont3", "prefect_boy_cont4",
-        "prefect_girl_cont1", "prefect_girl_cont2", "prefect_girl_cont3", "prefect_girl_cont4",
-        "student_council_cont1", "student_council_cont2", "student_council_cont3", "student_council_cont4"
-    ];
-
-    const topCandidates = {};
-
-    categories.forEach(category => {
-        onValue(ref(database, `result/${category}`), (snapshot) => {
-            const candidateName = fakeNames[category] || category;
-            const votes = countTrueValues(snapshot.val());
-            topCandidates[candidateName] = votes;
-            updateLightbox(topCandidates);
-        });
-    });
-}
-
-// Function to update the lightbox with top voted candidates
-function updateLightbox(topCandidates) {
-    const lightboxContent = document.getElementById('highest-voted-candidates');
-    lightboxContent.innerHTML = ''; // Clear previous content
-    Object.entries(topCandidates).forEach(([category, votes]) => {
-        lightboxContent.innerHTML += `<strong>${category}</strong>: ${votes} votes<br>`;
-    });
-}
 
 // Call the function to populate the table when the page loads
 window.onload = populateTable;
