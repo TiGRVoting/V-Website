@@ -20,6 +20,7 @@
             justify-content: center;
             align-items: center;
             overflow-y: hidden;
+            color: white; /* Set text color to white */
         }
         .container {
             width: 74%; /* Adjust the width of the container */
@@ -31,23 +32,27 @@
             margin-bottom: 320px; /* Adjust margin-bottom to change the position */
             margin-left: auto; /* Align the container to the center horizontally */
             margin-right: auto; /* Align the container to the center horizontally */
+            background-color: rgba(0, 0, 0, 0.5); /* Set container background color to semi-transparent black */
+            color: white; /* Set text color to white */
+            border: 5px solid black; /* Add black border */
+            border-radius: 10px; /* Add border radius */
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            border: 5px solid black; /* Add black border to the table */
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: black; /* Set header background color to black */
+            color: white; /* Set header text color to white */
             top: 0;
             z-index: 2; /* Ensure headings stay above table cells */
         }
 
         th, td {
             padding: 20px; /* Reduce padding */
-            border: 15px solid #ddd;
-            border-width: 1.5px;
             text-align: center;
             font-size: 17px; /* Reduce font size */
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; /* Use a more readable font family */
@@ -71,4 +76,3 @@
     <script type="module" src="app.js"></script>
 </body>
 </html>
-
