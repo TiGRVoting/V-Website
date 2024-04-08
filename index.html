@@ -23,15 +23,15 @@
             color: white; /* Set text color to white */
         }
         .container {
-            width: 74%; /* Adjust the width of the container */
-            max-height: 600px; /* Adjust the maximum height of the container */
+            width: 33%; /* Set width to one-third of the screen */
+            max-height: 600px; /* Keep the maximum height */
             overflow-y: auto; /* Add vertical scrollbar when necessary */
             box-shadow: 0px 5px 20px;
             padding: 20px; /* Adjust padding as needed */
-            margin-top: 600px; /* Adjust margin-top to change the position */
+            margin-top: 500px; /* Adjust margin-top to change the position */
             margin-bottom: 320px; /* Adjust margin-bottom to change the position */
-            margin-left: auto; /* Align the container to the center horizontally */
-            margin-right: auto; /* Align the container to the center horizontally */
+            margin-left: 5%; /* Align the container to the center horizontally */
+            margin-right: 1%; /* Align the container to the center horizontally */
             background-color: rgba(0, 0, 0, 0.5); /* Set container background color to semi-transparent black */
             color: white; /* Set text color to white */
             border: 5px solid black; /* Add black border */
@@ -57,6 +57,22 @@
             font-size: 17px; /* Reduce font size */
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; /* Use a more readable font family */
         }
+
+        .second-table {
+            width: 66%; /* Set width to two-thirds of the screen */
+            max-height: 600px; /* Keep the maximum height */
+            overflow-y: auto; /* Add vertical scrollbar when necessary */
+            box-shadow: 0px 5px 20px;
+            padding: 20px; /* Adjust padding as needed */
+            margin-top: 500px; /* Adjust margin-top to change the position */
+            margin-bottom: 320px; /* Adjust margin-bottom to change the position */
+            margin-left: 1%; /* Align the container to the center horizontally */
+            margin-right: 5%; /* Align the container to the center horizontally */
+            background-color: rgba(0, 0, 0, 0.5); /* Set container background color to semi-transparent black */
+            color: white; /* Set text color to white */
+            border: 5px solid black; /* Add black border */
+            border-radius: 10px; /* Add border radius */
+        }
     </style>
 </head>
 <body>
@@ -70,6 +86,19 @@
             </thead>
             <tbody id="table-body">
                 <!-- Table data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+    <div class="second-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Top Voted Candidate</th>
+                </tr>
+            </thead>
+            <tbody id="second-table-body">
+                <!-- Second table data will be inserted here -->
             </tbody>
         </table>
     </div>
