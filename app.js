@@ -87,30 +87,34 @@ function populateTable() {
 }
 
 // Function to update Table 2 with the top voted contestant for each category
-function updateSecondTable(data) {
+function updateSecondTable() {
     const topContestants = {};
 
-    // Iterate over the data to find the top voted contestant for each category
-    Object.entries(data).forEach(([key, value]) => {
-        const candidateName = fakeNames[key] || key; // Use fake name if available, else use identifier
-        const category = getCategoryFromContestant(candidateName);
-        const votes = countTrueValues(value);
+    // Iterate over the rows of Table 1
+    const tableRows = document.querySelectorAll('#table-body tr');
+    tableRows.forEach(row => {
+        const candidate = row.cells[0].textContent;
+        const category = getCategoryFromContestant(candidate);
+        const votes = parseInt(row.cells[1].textContent);
 
         // Update the top voted contestant for the category if necessary
         if (!topContestants[category] || votes > topContestants[category].votes) {
-            topContestants[category] = { contestant: candidateName, votes: votes };
+            topContestants[category] = { contestant: candidate, votes: votes };
         }
     });
 
     // Populate Table 2 with the top voted contestant for each category
-    const secondTableBody = document.getElementById('second-table-body');
-    secondTableBody.innerHTML = ''; // Clear previous data
-    Object.entries(topContestants).forEach(([category, contestant]) => {
-        const row = document.createElement('tr');
-        row.innerHTML = `<td>${category}</td><td>${contestant ? contestant.contestant : 'null'}</td>`;
-        secondTableBody.appendChild(row);
+    const secondTableRows = document.querySelectorAll('#second-table-body tr');
+    secondTableRows.forEach(row => {
+        const category = row.cells[0].textContent;
+        if (topContestants[category]) {
+            row.cells[1].textContent = topContestants[category].contestant;
+        } else {
+            row.cells[1].textContent = "null"; // Set to "null" if no top-voted contestant found
+        }
     });
 }
+
 
 // Function to count true values in an object
 function countTrueValues(obj) {
