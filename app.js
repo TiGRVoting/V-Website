@@ -74,21 +74,17 @@ const fakeNames = {
 // Function to fetch data and populate table
 function populateTable() {
     onValue(resultRef, (snapshot) => {
-        const resultData = snapshot.val();
-        if (resultData) {
-            const tableBody = document.getElementById("table-body");
-            tableBody.innerHTML = ""; // Clear previous data
-            Object.entries(resultData).forEach(([key, value]) => {
-                const candidateName = fakeNames[key] || key; // Use fake name if available, else use identifier
-                const votes = countTrueValues(value);
-                const tableRow = document.createElement("tr");
-                tableRow.innerHTML = `<td>${candidateName}</td><td>${votes}</td>`;
-                tableBody.appendChild(tableRow);
-            });
+        document.getElementById("table-body").innerHTML = ""; // Clear previous data
+        Object.entries(snapshot.val()).forEach(([key, value]) => {
+            const candidateName = fakeNames[key] || key; // Use fake name if available, else use identifier
+            const votes = countTrueValues(value);
+            const tableRow = document.createElement("tr");
+            tableRow.innerHTML = `<td>${candidateName}</td><td>${votes}</td>`;
+            document.getElementById("table-body").appendChild(tableRow);
+        });
 
-            // Call the function to update Table 2 once Table 1 data is retrieved
-            updateSecondTable(resultData);
-        }
+        // Call the function to update Table 2 once Table 1 data is retrieved
+        updateSecondTable();
     });
 }
 
@@ -98,26 +94,29 @@ function populateSecondTable() {
 }
 
 // Function to update Table 2 with top-voted contestants for each category
-function updateSecondTable(resultData) {
+function updateSecondTable() {
     const topContestants = {};
 
-    // Iterate over the entries of the result data
-    Object.entries(resultData).forEach(([key, value]) => {
-        const category = getCategoryFromKey(key);
-        const candidateName = fakeNames[key] || key;
-        const votes = countTrueValues(value);
+    // Iterate over the rows of Table 1
+    const tableRows = document.querySelectorAll('#table-body tr');
+    tableRows.forEach(row => {
+        const candidate = row.cells[0].textContent;
+        const category = getCategoryFromContestant(candidate);
+        const votes = parseInt(row.cells[1].textContent);
 
+        // Update the top voted contestant for the category if necessary
         if (!topContestants[category] || votes > topContestants[category].votes) {
-            topContestants[category] = { contestant: candidateName, votes: votes };
+            topContestants[category] = { contestant: candidate, votes: votes };
         }
     });
 
-    // Update Table 2 with the top-voted contestants
-    const secondTableBody = document.getElementById("second-table-body");
-    Object.entries(topContestants).forEach(([category, data]) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `<td>${category}</td><td>${data.contestant}</td>`;
-        secondTableBody.appendChild(row);
+    // Populate Table 2 with the top voted contestant for each category
+    const secondTableRows = document.querySelectorAll('#second-table-body tr');
+    secondTableRows.forEach(row => {
+        const category = row.cells[0].textContent;
+        if (topContestants[category]) {
+            row.cells[1].textContent = topContestants[category].contestant;
+        }
     });
 }
 
@@ -126,18 +125,15 @@ function countTrueValues(obj) {
     return Object.values(obj).filter(value => value === true).length;
 }
 
-// Function to extract category from the key
-function getCategoryFromKey(key) {
-    const parts = key.split("_");
-    return `${capitalize(parts[0])} ${capitalize(parts[1])}`;
+// Function to extract category from contestant name
+function getCategoryFromContestant(contestant) {
+    // Extract category from the contestant name (e.g., "prefect_boy_cont1" -> "Boy Prefect")
+    const categoryParts = contestant.split("_");
+    return categoryParts[0] + " " + categoryParts[1];
 }
 
-// Function to capitalize the first letter of a string
-function capitalize(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-// Call the function to populate Table 1 when the page loads
+// Call the function to populate the tables when the page loads
 window.onload = function() {
     populateTable();
 };
+
