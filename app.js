@@ -82,72 +82,36 @@ function populateTable() {
             tableRow.innerHTML = `<td>${candidateName}</td><td>${votes}</td>`;
             document.getElementById("table-body").appendChild(tableRow);
         });
+        updateSecondTable(snapshot.val());
     });
 }
 
-// Function to populate the second table with top-voted contestants in each category
-function populateSecondTable() {
-    const secondTableBody = document.getElementById('second-table-body');
-    secondTableBody.innerHTML = ''; // Clear previous data
-
-    // Predefined array of category names
-    const categories = [
-        "Boy Prefect",
-        "Girl Prefect",
-        "Student Council",
-        "Pine Captain",
-        "Pine Vice Captain",
-        "Maple Captain",
-        "Maple Vice Captain",
-        "Oak Captain",
-        "Oak Vice Captain",
-        "Cedar Captain",
-        "Cedar Vice Captain"
-    ];
-
-    // Populate the second table with predefined categories and "null" values
-    categories.forEach(category => {
-        const row = document.createElement('tr');
-        const categoryCell = document.createElement('td');
-        categoryCell.textContent = category;
-        const contestantCell = document.createElement('td');
-        contestantCell.textContent = "null"; // Initially set as "null"
-        row.appendChild(categoryCell);
-        row.appendChild(contestantCell);
-        secondTableBody.appendChild(row);
-    });
-}
-
-// Call the function to populate the second table with predefined categories
-populateSecondTable();
-
-function updateSecondTable() {
+// Function to update Table 2 with the top voted contestant for each category
+function updateSecondTable(data) {
     const topContestants = {};
 
-    // Iterate over the rows of Table 1
-    const tableRows = document.querySelectorAll('#table-body tr');
-    tableRows.forEach(row => {
-        const candidate = row.cells[0].textContent;
-        const category = getCategoryFromContestant(candidate);
-        const votes = parseInt(row.cells[1].textContent);
+    // Iterate over the data to find the top voted contestant for each category
+    Object.entries(data).forEach(([key, value]) => {
+        const candidateName = fakeNames[key] || key; // Use fake name if available, else use identifier
+        const category = getCategoryFromContestant(candidateName);
+        const votes = countTrueValues(value);
 
         // Update the top voted contestant for the category if necessary
         if (!topContestants[category] || votes > topContestants[category].votes) {
-            topContestants[category] = { contestant: candidate, votes: votes };
+            topContestants[category] = { contestant: candidateName, votes: votes };
         }
     });
 
     // Populate Table 2 with the top voted contestant for each category
-    const secondTableRows = document.querySelectorAll('#second-table-body tr');
-    secondTableRows.forEach(row => {
-        const category = row.cells[0].textContent;
-        if (topContestants[category]) {
-            row.cells[1].textContent = topContestants[category].contestant;
-        }
+    const secondTableBody = document.getElementById('second-table-body');
+    secondTableBody.innerHTML = ''; // Clear previous data
+    Object.entries(topContestants).forEach(([category, contestant]) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${category}</td><td>${contestant ? contestant.contestant : 'null'}</td>`;
+        secondTableBody.appendChild(row);
     });
 }
-// Call the function to update the second table with top-voted contestants once the data is retrieved
-updateSecondTable();
+
 // Function to count true values in an object
 function countTrueValues(obj) {
     return Object.values(obj).filter(value => value === true).length;
@@ -157,11 +121,11 @@ function countTrueValues(obj) {
 function getCategoryFromContestant(contestant) {
     // Extract category from the contestant name (e.g., "prefect_boy_cont1" -> "Boy Prefect")
     const category = contestant.split("_")[0] + " " + contestant.split("_")[1];
-    return category in topContestants ? category : null;
+    return category;
 }
 
 // Call the function to populate the tables when the page loads
 window.onload = function() {
     populateTable();
-    populateSecondTable();
 };
+
