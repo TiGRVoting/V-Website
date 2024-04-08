@@ -88,12 +88,6 @@ function populateTable() {
     });
 }
 
-// Function to populate the second table with top-voted contestants in each category
-function populateSecondTable() {
-    // No need to populate initially, as it will be updated dynamically
-}
-
-// Function to update Table 2 with top-voted contestants for each category
 // Function to update Table 2 with top-voted contestants for each category
 function updateSecondTable() {
     const topContestants = {};
@@ -115,15 +109,13 @@ function updateSecondTable() {
     const secondTableRows = document.querySelectorAll('#second-table-body tr');
     secondTableRows.forEach(row => {
         const category = row.cells[0].textContent;
-        const topContestant = topContestants[category];
-        if (topContestant) {
-            row.cells[1].textContent = topContestant.contestant;
+        if (topContestants[category]) {
+            row.cells[1].textContent = topContestants[category].contestant;
         } else {
-            row.cells[1].textContent = "null";
+            row.cells[1].textContent = "null"; // Set to "null" if no contestant found
         }
     });
 }
-
 
 // Function to count true values in an object
 function countTrueValues(obj) {
@@ -137,7 +129,7 @@ function getCategoryFromContestant(contestant) {
     return categoryParts[0] + " " + categoryParts[1];
 }
 
-// Call the function to populate the tables when the page loads
+// Call the function to populate Table 1 when the page loads
 window.onload = function() {
     populateTable();
 };
