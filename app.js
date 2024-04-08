@@ -82,13 +82,45 @@ function populateTable() {
             tableRow.innerHTML = `<td>${candidateName}</td><td>${votes}</td>`;
             document.getElementById("table-body").appendChild(tableRow);
         });
-
-        // Call the function to update Table 2 once Table 1 data is retrieved
-        updateSecondTable();
     });
 }
 
-// Function to update Table 2 with top-voted contestants for each category
+// Function to populate the second table with top-voted contestants in each category
+function populateSecondTable() {
+    const secondTableBody = document.getElementById('second-table-body');
+    secondTableBody.innerHTML = ''; // Clear previous data
+
+    // Predefined array of category names
+    const categories = [
+        "Boy Prefect",
+        "Girl Prefect",
+        "Student Council",
+        "Pine Captain",
+        "Pine Vice Captain",
+        "Maple Captain",
+        "Maple Vice Captain",
+        "Oak Captain",
+        "Oak Vice Captain",
+        "Cedar Captain",
+        "Cedar Vice Captain"
+    ];
+
+    // Populate the second table with predefined categories and "null" values
+    categories.forEach(category => {
+        const row = document.createElement('tr');
+        const categoryCell = document.createElement('td');
+        categoryCell.textContent = category;
+        const contestantCell = document.createElement('td');
+        contestantCell.textContent = "null"; // Initially set as "null"
+        row.appendChild(categoryCell);
+        row.appendChild(contestantCell);
+        secondTableBody.appendChild(row);
+    });
+}
+
+// Call the function to populate the second table with predefined categories
+populateSecondTable();
+
 function updateSecondTable() {
     const topContestants = {};
 
@@ -111,12 +143,11 @@ function updateSecondTable() {
         const category = row.cells[0].textContent;
         if (topContestants[category]) {
             row.cells[1].textContent = topContestants[category].contestant;
-        } else {
-            row.cells[1].textContent = "null"; // Set to "null" if no contestant found
         }
     });
 }
-
+// Call the function to update the second table with top-voted contestants once the data is retrieved
+updateSecondTable();
 // Function to count true values in an object
 function countTrueValues(obj) {
     return Object.values(obj).filter(value => value === true).length;
@@ -125,12 +156,12 @@ function countTrueValues(obj) {
 // Function to extract category from contestant name
 function getCategoryFromContestant(contestant) {
     // Extract category from the contestant name (e.g., "prefect_boy_cont1" -> "Boy Prefect")
-    const categoryParts = contestant.split("_");
-    return categoryParts[0] + " " + categoryParts[1];
+    const category = contestant.split("_")[0] + " " + contestant.split("_")[1];
+    return category in topContestants ? category : null;
 }
 
-// Call the function to populate Table 1 when the page loads
+// Call the function to populate the tables when the page loads
 window.onload = function() {
     populateTable();
+    populateSecondTable();
 };
-
