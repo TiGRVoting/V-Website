@@ -115,6 +115,7 @@ function populateTable() {
 }
 
 // Function to populate the second table with top-voted contestants in each category
+// Function to populate the second table with top-voted contestants in each category
 function populateSecondTable() {
     const secondTableBody = document.getElementById('second-table-body');
     secondTableBody.innerHTML = ''; // Clear previous data
@@ -126,12 +127,12 @@ function populateSecondTable() {
         "Student Council",
         "Pine Captain",
         "Pine Vice Captain",
+        "Cedar Captain",
+        "Cedar Vice Captain",
         "Maple Captain",
         "Maple Vice Captain",
         "Oak Captain",
-        "Oak Vice Captain",
-        "Cedar Captain",
-        "Cedar Vice Captain"
+        "Oak Vice Captain"
     ];
 
     // Populate the second table with predefined categories and "null" values
@@ -146,12 +147,6 @@ function populateSecondTable() {
         secondTableBody.appendChild(row);
     });
 }
-
-// Call the function to populate Table 1 and Table 2 when the page loads
-window.onload = function() {
-    populateTable();
-    populateSecondTable();
-};
 
 // Function to update Table 2 with top-voted contestants for each category
 function updateSecondTable() {
@@ -179,6 +174,7 @@ function updateSecondTable() {
         }
     });
 }
+
 
 // Function to count true values in an object
 function countTrueValues(obj) {
