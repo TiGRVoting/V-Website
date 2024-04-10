@@ -73,19 +73,42 @@ const fakeNames = {
 
 // Function to fetch data and populate table
 function populateTable() {
-    onValue(resultRef, (snapshot) => {
-        document.getElementById("table-body").innerHTML = ""; // Clear previous data
-        Object.entries(snapshot.val()).forEach(([key, value]) => {
-            const candidateName = fakeNames[key] || key; // Use fake name if available, else use identifier
-            const votes = countTrueValues(value);
-            const tableRow = document.createElement("tr");
-            tableRow.innerHTML = `<td>${candidateName}</td><td>${votes}</td>`;
-            document.getElementById("table-body").appendChild(tableRow);
-        });
-        // Call the function to update Table 2 with top-voted contestants after data is retrieved
-        updateSecondTable();
+    // Clear previous data
+    document.getElementById("table-body").innerHTML = "";
+
+    // Define categories and their respective contestants
+    const categoryContestants = {
+        "Boy Prefect": ["prefect_boy_cont1", "prefect_boy_cont2", "prefect_boy_cont3", "prefect_boy_cont4"],
+        "Girl Prefect": ["prefect_girl_cont1", "prefect_girl_cont2", "prefect_girl_cont3", "prefect_girl_cont4"],
+        "Student Council": ["student_council_cont1", "student_council_cont2", "student_council_cont3", "student_council_cont4"],
+        "Pine Captain": ["pine_captain_cont1", "pine_captain_cont2", "pine_captain_cont3", "pine_captain_cont4"],
+        "Pine Vice Captain": ["pine_vc_cont1", "pine_vc_cont2", "pine_vc_cont3", "pine_vc_cont4"],
+        "Cedar Captain": ["cedar_captain_cont1", "cedar_captain_cont2", "cedar_captain_cont3", "cedar_captain_cont4"],
+        "Cedar Vice Captain": ["cedar_vc_cont1", "cedar_vc_cont2", "cedar_vc_cont3", "cedar_vc_cont4"],
+        "Maple Captain": ["maple_captain_cont1", "maple_captain_cont2", "maple_captain_cont3", "maple_captain_cont4"],
+        "Maple Vice Captain": ["maple_vc_cont1", "maple_vc_cont2", "maple_vc_cont3", "maple_vc_cont4"],
+        "Oak Captain": ["oak_captain_cont1", "oak_captain_cont2", "oak_captain_cont3", "oak_captain_cont4"],
+        "Oak Vice Captain": ["oak_vc_cont1", "oak_vc_cont2", "oak_vc_cont3", "oak_vc_cont4"]
+    };
+
+    // Loop through categories
+    Object.entries(categoryContestants).forEach(([category, contestants]) => {
+        const categoryVotes = contestants.map(contestant => {
+            const candidateName = fakeNames[contestant] || contestant;
+            const votes = countTrueValues(snapshot.val()[contestant]);
+            return `<tr><td>${candidateName}</td><td>${votes}</td></tr>`;
+        }).join(""); // Join contestant votes for this category into a single string
+
+        // Append category votes to table body
+        document.getElementById("table-body").innerHTML += `
+            <tr>
+                <td colspan="2" style="background-color: black; color: white; font-weight: bold;">${category}</td>
+            </tr>
+            ${categoryVotes}
+        `;
     });
 }
+
 
 // Function to populate the second table with top-voted contestants in each category
 function populateSecondTable() {
