@@ -187,3 +187,10 @@ function getCategoryFromContestant(contestant) {
     const category = contestant.split("_")[0] + " " + contestant.split("_")[1];
     return category;
 }
+
+// Call the function to populate Table 1 and Table 2 when the page loads
+window.onload = function() {
+    populateTable();
+    populateSecondTable();
+};
+
