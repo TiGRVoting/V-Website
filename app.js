@@ -158,50 +158,65 @@ function updateSecondTable() {
     let currentCategory = null;
     const tableRows = document.querySelectorAll('#table-body tr');
 
+    // Gather top-voted contestants for each category
     for (const row of tableRows) {
-        // Determine if the row is a category header (background color is black)
+        // Check if the row is a category header (background color is black)
         if (row.cells.length === 1 && row.cells[0].style.backgroundColor === 'black') {
             currentCategory = row.cells[0].textContent.trim();
-            topContestants[currentCategory] = { contestant: null, votes: 0 }; // Initialize with 0 votes
+            // Initialize top contestant for the category
+            topContestants[currentCategory] = { contestant: null, votes: 0 };
             continue;
         }
 
-        // If it is not a category header row
+        // Otherwise, consider it as a candidate row
         if (currentCategory) {
             const candidate = row.cells[0].textContent;
             const votes = parseInt(row.cells[1].textContent);
 
-            // Check if the current candidate has more votes than the current top contestant for the category
+            // Check if the candidate has more votes than the current top contestant for the category
             if (votes > topContestants[currentCategory].votes) {
                 topContestants[currentCategory] = { contestant: candidate, votes: votes };
             }
         }
     }
 
-    // Populate the second table with the top-voted contestants
-    const secondTableRows = document.querySelectorAll('#second-table-body tr');
-    const candidateImageURL = "https://github.com/TiGRVoting/V-Website/blob/ff08401ac009f8369ad648be10e5f3548bfe0433/Images/rithik.JPG?raw=true";
+    // Populate the second table with the top-voted candidates' images
+    const secondTableBody = document.getElementById('second-table-body');
+    secondTableBody.innerHTML = ''; // Clear previous data
 
-    for (const row of secondTableRows) {
-        const category = row.cells[0].textContent.trim();
+    const candidateImageURL = "https://github.com/TiGRVoting/V-Website/blob/ff08401ac009f8369ad648be10e5f3548bfe0433/Images/rithik.JPG?raw=true"; // For now, same image for all candidates
 
-        // Check if the top contestant exists and has votes greater than zero
-        if (topContestants[category] && topContestants[category].votes > 0) {
+    // Iterate through the categories and create rows with images for top-voted candidates
+    for (const [category, topContestant] of Object.entries(topContestants)) {
+        // Create a row for each category
+        const row = document.createElement('tr');
+        
+        // Create the first cell for the category
+        const categoryCell = document.createElement('td');
+        categoryCell.textContent = category;
+        
+        // Create the second cell for the top-voted candidate's image
+        const imageCell = document.createElement('td');
+        if (topContestant && topContestant.votes > 0) {
             // Create an image element for the top-voted candidate
             const imgElement = document.createElement('img');
             imgElement.src = candidateImageURL;
-            imgElement.alt = topContestants[category].contestant;
-            imgElement.style.width = '50px';
-            imgElement.style.height = '50px';
+            imgElement.alt = topContestant.contestant;
+            imgElement.style.width = '100px'; // Adjust the width as desired
+            imgElement.style.height = '100px'; // Adjust the height as desired
             imgElement.style.borderRadius = '5px'; // Optional: add border radius for rounded corners
-
-            // Clear any existing text and insert the image
-            row.cells[1].textContent = '';
-            row.cells[1].appendChild(imgElement);
+            imageCell.appendChild(imgElement);
         } else {
-            // No votes or no top contestant, set to "null"
-            row.cells[1].textContent = "null";
+            // Set the cell content to "null" if there is no top contestant or votes
+            imageCell.textContent = 'null';
         }
+
+        // Append the cells to the row
+        row.appendChild(categoryCell);
+        row.appendChild(imageCell);
+
+        // Append the row to the second table body
+        secondTableBody.appendChild(row);
     }
 }
 
