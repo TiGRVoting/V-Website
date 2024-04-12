@@ -150,26 +150,37 @@ function populateSecondTable() {
 }
 
 // Function to update Table 2 with top-voted contestants for each category
+// Function to update Table 2 with top-voted contestants for each category
 function updateSecondTable() {
     const topContestants = {};
 
     // Iterate over the rows of Table 1
     const tableRows = document.querySelectorAll('#table-body tr');
+    let currentCategory = null;
+
     tableRows.forEach(row => {
         const candidate = row.cells[0].textContent;
-        const category = getCategoryFromContestant(candidate);
         const votes = parseInt(row.cells[1].textContent);
+        
+        // If the row contains a category header (1 column and background color)
+        if (row.cells.length === 1 && row.cells[0].style.backgroundColor === 'black') {
+            currentCategory = row.cells[0].textContent.trim(); // Update current category
+            return; // Skip to the next row
+        }
 
         // Update the top voted contestant for the category if necessary
-        if (!topContestants[category] || votes > topContestants[category].votes) {
-            topContestants[category] = { contestant: candidate, votes: votes };
+        if (currentCategory) {
+            // Check if this is the first candidate in the current category
+            if (!topContestants[currentCategory] || votes > topContestants[currentCategory].votes) {
+                topContestants[currentCategory] = { contestant: candidate, votes: votes };
+            }
         }
     });
 
     // Populate Table 2 with the top voted contestant for each category
     const secondTableRows = document.querySelectorAll('#second-table-body tr');
     secondTableRows.forEach(row => {
-        const category = row.cells[0].textContent;
+        const category = row.cells[0].textContent.trim();
         if (topContestants[category]) {
             row.cells[1].textContent = topContestants[category].contestant;
         }
