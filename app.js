@@ -156,8 +156,8 @@ function updateSecondTable() {
 
     // Iterate through the rows of Table 1
     let currentCategory = null;
-
     const tableRows = document.querySelectorAll('#table-body tr');
+
     for (const row of tableRows) {
         // Determine if the row is a category header (background color is black)
         if (row.cells.length === 1 && row.cells[0].style.backgroundColor === 'black') {
@@ -182,11 +182,12 @@ function updateSecondTable() {
     const secondTableRows = document.querySelectorAll('#second-table-body tr');
     for (const row of secondTableRows) {
         const category = row.cells[0].textContent.trim();
+
+        // Check if the top contestant exists and has votes greater than zero
         if (topContestants[category] && topContestants[category].votes > 0) {
-            // If there's a top contestant with more than 0 votes
             row.cells[1].textContent = topContestants[category].contestant;
         } else {
-            // No votes for the category, display "null"
+            // No votes or no top contestant, set to "null"
             row.cells[1].textContent = "null";
         }
     }
