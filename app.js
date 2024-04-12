@@ -116,70 +116,35 @@ function populateTable() {
 
 // Function to populate the second table with top-voted contestants in each category
 // Function to populate the second table with top-voted contestants in each category
+// Function to populate the second table with top-voted contestants in each category
 function populateSecondTable() {
-    // Get reference to the second table body
     const secondTableBody = document.getElementById('second-table-body');
+    secondTableBody.innerHTML = ''; // Clear previous data
 
-    // Clear previous data from the second table
-    secondTableBody.innerHTML = '';
+    // Predefined array of category names
+    const categories = [
+        "Boy Prefect",
+        "Girl Prefect",
+        "Student Council",
+        "Pine Captain",
+        "Pine Vice Captain",
+        "Cedar Captain",
+        "Cedar Vice Captain",
+        "Maple Captain",
+        "Maple Vice Captain",
+        "Oak Captain",
+        "Oak Vice Captain"
+    ];
 
-    // Define categories and their respective contestants
-    const categoryContestants = {
-        "Boy Prefect": ["prefect_boy_cont1", "prefect_boy_cont2", "prefect_boy_cont3", "prefect_boy_cont4"],
-        "Girl Prefect": ["prefect_girl_cont1", "prefect_girl_cont2", "prefect_girl_cont3", "prefect_girl_cont4"],
-        "Student Council": ["student_council_cont1", "student_council_cont2", "student_council_cont3", "student_council_cont4"],
-        "Pine Captain": ["pine_captain_cont1", "pine_captain_cont2", "pine_captain_cont3", "pine_captain_cont4"],
-        "Pine Vice Captain": ["pine_vc_cont1", "pine_vc_cont2", "pine_vc_cont3", "pine_vc_cont4"],
-        "Cedar Captain": ["cedar_captain_cont1", "cedar_captain_cont2", "cedar_captain_cont3", "cedar_captain_cont4"],
-        "Cedar Vice Captain": ["cedar_vc_cont1", "cedar_vc_cont2", "cedar_vc_cont3", "cedar_vc_cont4"],
-        "Maple Captain": ["maple_captain_cont1", "maple_captain_cont2", "maple_captain_cont3", "maple_captain_cont4"],
-        "Maple Vice Captain": ["maple_vc_cont1", "maple_vc_cont2", "maple_vc_cont3", "maple_vc_cont4"],
-        "Oak Captain": ["oak_captain_cont1", "oak_captain_cont2", "oak_captain_cont3", "oak_captain_cont4"],
-        "Oak Vice Captain": ["oak_vc_cont1", "oak_vc_cont2", "oak_vc_cont3", "oak_vc_cont4"]
-    };
-
-    // Initialize an object to keep track of top-voted candidates for each category
-    const topVotedCandidates = {};
-
-    // Loop through each category and its contestants
-    Object.entries(categoryContestants).forEach(([category, contestants]) => {
-        let topCandidate = null;
-        let maxVotes = 0;
-
-        // Loop through each contestant in the category
-        contestants.forEach(contestant => {
-            const candidateName = fakeNames[contestant];
-            const votes = countTrueValues(resultData[contestant]);
-
-            // Check if this contestant has more votes than the current top candidate
-            if (votes > maxVotes) {
-                topCandidate = candidateName;
-                maxVotes = votes;
-            }
-        });
-
-        // Store the top-voted candidate for the category
-        topVotedCandidates[category] = topCandidate;
-    });
-
-    // Populate the second table with the top-voted candidate for each category
-    Object.entries(topVotedCandidates).forEach(([category, topCandidate]) => {
-        // Create a new table row for each category
+    // Populate the second table with top-voted contestants for each category
+    categories.forEach(category => {
         const row = document.createElement('tr');
-
-        // Create a cell for the category
         const categoryCell = document.createElement('td');
         categoryCell.textContent = category;
-
-        // Create a cell for the top-voted candidate
-        const candidateCell = document.createElement('td');
-        candidateCell.textContent = topCandidate;
-
-        // Append the cells to the row
+        const contestantCell = document.createElement('td');
+        contestantCell.textContent = "null"; // Initially set as "null"
         row.appendChild(categoryCell);
-        row.appendChild(candidateCell);
-
-        // Append the row to the second table body
+        row.appendChild(contestantCell);
         secondTableBody.appendChild(row);
     });
 }
@@ -210,7 +175,6 @@ function updateSecondTable() {
         }
     });
 }
-
 
 // Function to count true values in an object
 function countTrueValues(obj) {
