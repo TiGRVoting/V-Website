@@ -154,37 +154,40 @@ function populateSecondTable() {
 function updateSecondTable() {
     const topContestants = {};
 
-    // Iterate over the rows of Table 1
-    const tableRows = document.querySelectorAll('#table-body tr');
+    // Iterate through the rows of Table 1
     let currentCategory = null;
 
-    tableRows.forEach(row => {
-        const candidate = row.cells[0].textContent;
-        const votes = parseInt(row.cells[1].textContent);
-        
-        // If the row contains a category header (1 column and background color)
+    const tableRows = document.querySelectorAll('#table-body tr');
+    for (const row of tableRows) {
+        // Determine if the row is a category header (background color is black)
         if (row.cells.length === 1 && row.cells[0].style.backgroundColor === 'black') {
-            currentCategory = row.cells[0].textContent.trim(); // Update current category
-            return; // Skip to the next row
+            currentCategory = row.cells[0].textContent.trim();
+            topContestants[currentCategory] = { contestant: null, votes: -1 }; // Initialize with -1 votes
+            continue;
         }
 
-        // Update the top voted contestant for the category if necessary
+        // If it is not a category header row
         if (currentCategory) {
-            // Check if this is the first candidate in the current category
-            if (!topContestants[currentCategory] || votes > topContestants[currentCategory].votes) {
+            const candidate = row.cells[0].textContent;
+            const votes = parseInt(row.cells[1].textContent);
+
+            // Check if the current candidate has more votes than the current top contestant for the category
+            if (votes > topContestants[currentCategory].votes) {
                 topContestants[currentCategory] = { contestant: candidate, votes: votes };
             }
         }
-    });
+    }
 
-    // Populate Table 2 with the top voted contestant for each category
+    // Populate the second table with the top-voted contestants
     const secondTableRows = document.querySelectorAll('#second-table-body tr');
-    secondTableRows.forEach(row => {
+    for (const row of secondTableRows) {
         const category = row.cells[0].textContent.trim();
-        if (topContestants[category]) {
+        if (topContestants[category] && topContestants[category].contestant) {
             row.cells[1].textContent = topContestants[category].contestant;
+        } else {
+            row.cells[1].textContent = "null"; // No valid top contestant found
         }
-    });
+    }
 }
 
 // Function to count true values in an object
