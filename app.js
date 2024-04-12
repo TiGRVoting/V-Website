@@ -180,19 +180,30 @@ function updateSecondTable() {
 
     // Populate the second table with the top-voted contestants
     const secondTableRows = document.querySelectorAll('#second-table-body tr');
+    const candidateImageURL = "https://github.com/TiGRVoting/V-Website/blob/ff08401ac009f8369ad648be10e5f3548bfe0433/Images/rithik.JPG?raw=true";
+
     for (const row of secondTableRows) {
         const category = row.cells[0].textContent.trim();
 
         // Check if the top contestant exists and has votes greater than zero
         if (topContestants[category] && topContestants[category].votes > 0) {
-            row.cells[1].textContent = topContestants[category].contestant;
+            // Create an image element for the top-voted candidate
+            const imgElement = document.createElement('img');
+            imgElement.src = candidateImageURL;
+            imgElement.alt = topContestants[category].contestant;
+            imgElement.style.width = '50px';
+            imgElement.style.height = '50px';
+            imgElement.style.borderRadius = '5px'; // Optional: add border radius for rounded corners
+
+            // Clear any existing text and insert the image
+            row.cells[1].textContent = '';
+            row.cells[1].appendChild(imgElement);
         } else {
             // No votes or no top contestant, set to "null"
             row.cells[1].textContent = "null";
         }
     }
 }
-
 
 // Function to count true values in an object
 function countTrueValues(obj) {
