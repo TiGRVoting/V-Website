@@ -162,7 +162,7 @@ function updateSecondTable() {
         // Determine if the row is a category header (background color is black)
         if (row.cells.length === 1 && row.cells[0].style.backgroundColor === 'black') {
             currentCategory = row.cells[0].textContent.trim();
-            topContestants[currentCategory] = { contestant: null, votes: -1 }; // Initialize with -1 votes
+            topContestants[currentCategory] = { contestant: null, votes: 0 }; // Initialize with 0 votes
             continue;
         }
 
@@ -182,13 +182,16 @@ function updateSecondTable() {
     const secondTableRows = document.querySelectorAll('#second-table-body tr');
     for (const row of secondTableRows) {
         const category = row.cells[0].textContent.trim();
-        if (topContestants[category] && topContestants[category].contestant) {
+        if (topContestants[category] && topContestants[category].votes > 0) {
+            // If there's a top contestant with more than 0 votes
             row.cells[1].textContent = topContestants[category].contestant;
         } else {
-            row.cells[1].textContent = "null"; // No valid top contestant found
+            // No votes for the category, display "null"
+            row.cells[1].textContent = "null";
         }
     }
 }
+
 
 // Function to count true values in an object
 function countTrueValues(obj) {
