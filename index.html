@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Election Results 24-25</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
@@ -41,6 +41,25 @@
             border-radius: 10px;
         }
 
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 5px solid black;
+        }
+
+        th {
+            background-color: black;
+            color: white;
+            top: 0;
+            z-index: 2;
+        }
+
+        th, td {
+            padding: 20px;
+            text-align: center;
+            font-size: 17px;
+        }
+
         .second-table {
             width: 66%;
             max-height: 600px;
@@ -63,19 +82,6 @@
             border-radius: 5px;
             object-fit: cover; /* Keep aspect ratio and fill the space */
         }
-
-        /* Style for horizontal table */
-        .horizontal-table th,
-        .horizontal-table td {
-            text-align: center;
-            padding: 10px;
-            border: 1px solid white;
-        }
-
-        .horizontal-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
     </style>
 </head>
 
@@ -85,7 +91,7 @@
             <thead>
                 <tr>
                     <th>Candidate</th>
-                    <th>Number of Votes</th>
+                    <th>Number of votes</th>
                 </tr>
             </thead>
             <tbody id="table-body">
@@ -94,7 +100,7 @@
         </table>
     </div>
     <div class="second-table">
-        <table class="horizontal-table">
+        <table>
             <thead>
                 <tr>
                     <th>Category</th>
@@ -106,7 +112,6 @@
             </tbody>
         </table>
     </div>
-
     <script type="module" src="app.js"></script>
 </body>
 
