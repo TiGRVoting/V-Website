@@ -202,7 +202,7 @@ function updateSecondTable() {
             
             // Add the image (using the provided URL as an example)
             const imgElement = document.createElement('img');
-            imgElement.src = 'https://github.com/TiGRVoting/V-Website/blob/a880e9d7d71c826ed6beba70983fb6d3f649e7c8/Images/placeholder.png?raw=true'; // Placeholder image URL for null values
+            imgElement.src = 'https://raw.githubusercontent.com/TiGRVoting/V-Website/a880e9d7d71c826ed6beba70983fb6d3f649e7c8/Images/placeholder.png'; // Placeholder image URL for null values
             imgElement.alt = topContestant.contestant;
             imgElement.style.width = '100px';
             imgElement.style.height = '100px';
@@ -249,7 +249,7 @@ function updateSecondTable() {
         } else {
             // Add a placeholder image for null values
             const imgElement = document.createElement('img');
-            imgElement.src = 'https://github.com/TiGRVoting/V-Website/blob/a880e9d7d71c826ed6beba70983fb6d3f649e7c8/Images/placeholder.png?raw=true'; // Placeholder image URL
+            imgElement.src = 'https://raw.githubusercontent.com/TiGRVoting/V-Website/a880e9d7d71c826ed6beba70983fb6d3f649e7c8/Images/placeholder.png'; // Placeholder image URL
             imgElement.alt = 'Placeholder';
             imgElement.style.width = '100px';
             imgElement.style.height = '100px';
