@@ -147,9 +147,6 @@ function populateSecondTable() {
         row.appendChild(contestantCell);
         secondTableBody.appendChild(row);
     });
-
-    // After creating the initial rows, fetch the top-voted contestants and update the images
-    updateSecondTable();
 }
 
 // Function to update Table 2 with top-voted contestants for each category
@@ -184,24 +181,28 @@ function updateSecondTable() {
 
     // Populate the second table with the top-voted candidates' images
     const secondTableBody = document.getElementById('second-table-body');
+    secondTableBody.innerHTML = ''; // Clear previous data
 
     // Iterate through the categories and create rows with images for top-voted candidates
     for (const [category, topContestant] of Object.entries(topContestants)) {
-        // Find the corresponding row in the second table
-        const row = secondTableBody.querySelector(`tr td:first-of-type:contains('${category}')`).parentNode;
+        // Create a row for each category
+        const row = document.createElement('tr');
+        
+        // Create the first cell for the category
+        const categoryCell = document.createElement('td');
+        categoryCell.textContent = category;
         
         // Create the second cell for the top-voted contestant's name and image
-        const contestantCell = row.querySelector('td:last-of-type');
+        const contestantCell = document.createElement('td');
         if (topContestant.contestant) {
             // Add top-voted contestant's name
             const contestantNameElement = document.createElement('div');
             contestantNameElement.textContent = topContestant.contestant;
-            contestantCell.innerHTML = ''; // Clear previous content
             contestantCell.appendChild(contestantNameElement);
             
-            // Add the image
+            // Add the image (using the provided URL as an example)
             const imgElement = document.createElement('img');
-            imgElement.src = getImageURL(topContestant.contestant); // Function to get image URL based on contestant
+            imgElement.src = 'https://github.com/TiGRVoting/V-Website/raw/c151a467e55311f3935dc6d39e2ec9d81c620eea/Images/thrivikram.png';
             imgElement.alt = topContestant.contestant;
             imgElement.style.width = '100px';
             imgElement.style.height = '100px';
@@ -248,34 +249,29 @@ function updateSecondTable() {
         } else {
             contestantCell.textContent = 'null';
         }
+
+        // Append the category and contestant cells to the row
+        row.appendChild(categoryCell);
+        row.appendChild(contestantCell);
+        
+        // Append the row to the second table body
+        secondTableBody.appendChild(row);
     }
 }
-
-// Function to get image URL based on contestant (Replace this with your actual function)
-function getImageURL(contestantName) {
-    // Logic to map contestant name to image URL
-    // For example:
-    // if (contestantName === 'John Doe') {
-    //     return 'https://example.com/john-doe-image.jpg';
-    // }
-    // else if (contestantName === 'Jane Smith') {
-    //     return 'https://example.com/jane-smith-image.jpg';
-    // }
-    // else {
-    //     return 'https://example.com/default-image.jpg'; // Default image if no match
-    // }
-
-    // Temporary solution using placeholder image
-    return 'https://github.com/TiGRVoting/V-Website/blob/a880e9d7d71c826ed6beba70983fb6d3f649e7c8/Images/placeholder';
+// Function to count true values in an object
+function countTrueValues(obj) {
+    return Object.values(obj).filter(value => value === true).length;
 }
 
-// Call the function to populate Table 1 and Table 2 when the page loads
-window.onload = function() {
-    populateSecondTable(); // Populate second table first as it depends on the first table's data
-    populateTable();
-};// Function to extract category from contestant name
+// Function to extract category from contestant name
 function getCategoryFromContestant(contestant) {
     // Extract category from the contestant name (e.g., "prefect_boy_cont1" -> "Boy Prefect")
     const category = contestant.split("_")[0] + " " + contestant.split("_")[1];
     return category;
 }
+
+// Call the function to populate Table 1 and Table 2 when the page loads
+window.onload = function() {
+    populateTable();
+    populateSecondTable();
+};
