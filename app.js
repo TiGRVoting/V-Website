@@ -24,50 +24,50 @@ const database = getDatabase(firebaseApp);
 const resultRef = ref(database, "result");
 
 // Mapping of fake names to identifiers
-const fakeNames = {
-    "cedar_captain_cont1": "Cedar Captain 1",
-    "cedar_captain_cont2": "Cedar Captain 2",
+const Names = {
+    "cedar_captain_cont1": "KAVYA SA",
+    "cedar_captain_cont2": "ADHAV K",
     "cedar_captain_cont3": "Cedar Captain 3",
     "cedar_captain_cont4": "Cedar Captain 4",
-    "cedar_vc_cont1": "Cedar Vice Captain 1",
+    "cedar_vc_cont1": "NAMRRUTHA S",
     "cedar_vc_cont2": "Cedar Vice Captain 2",
     "cedar_vc_cont3": "Cedar Vice Captain 3",
     "cedar_vc_cont4": "Cedar Vice Captain 4",
-    "maple_captain_cont1": "Maple Captain 1",
-    "maple_captain_cont2": "Maple Captain 2",
+    "maple_captain_cont1": "ATHULVINAYAK PRADEEP",
+    "maple_captain_cont2": "ARNAV",
     "maple_captain_cont3": "Maple Captain 3",
     "maple_captain_cont4": "Maple Captain 4",
-    "maple_vc_cont1": "Maple Vice Captain 1",
+    "maple_vc_cont1": "SHASHANG R",
     "maple_vc_cont2": "Maple Vice Captain 2",
     "maple_vc_cont3": "Maple Vice Captain 3",
     "maple_vc_cont4": "Maple Vice Captain 4",
-    "oak_captain_cont1": "Oak Captain 1",
-    "oak_captain_cont2": "Oak Captain 2",
-    "oak_captain_cont3": "Oak Captain 3",
+    "oak_captain_cont1": "RISHAAN R RANKA",
+    "oak_captain_cont2": "JAYANTH CB",
+    "oak_captain_cont3": "ADITYA ASHOK",
     "oak_captain_cont4": "Oak Captain 4",
-    "oak_vc_cont1": "Oak Vice Captain 1",
-    "oak_vc_cont2": "Oak Vice Captain 2",
+    "oak_vc_cont1": "HAASHINI PRIYA CP",
+    "oak_vc_cont2": "SIVNETHRAN SK",
     "oak_vc_cont3": "Oak Vice Captain 3",
     "oak_vc_cont4": "Oak Vice Captain 4",
-    "pine_captain_cont1": "Pine Captain 1",
-    "pine_captain_cont2": "Pine Captain 2",
+    "pine_captain_cont1": "DHAIRYA BAGRI",
+    "pine_captain_cont2": "NEBIN BOSE B",
     "pine_captain_cont3": "Pine Captain 3",
     "pine_captain_cont4": "Pine Captain 4",
-    "pine_vc_cont1": "Pine Vice Captain 1",
-    "pine_vc_cont2": "Pine Vice Captain 2",
+    "pine_vc_cont1": "VINAYA SELVARAJ",
+    "pine_vc_cont2": "MAHI KISHORE SETHIA",
     "pine_vc_cont3": "Pine Vice Captain 3",
     "pine_vc_cont4": "Pine Vice Captain 4",
-    "prefect_boy_cont1": "Prefect Boy 1",
-    "prefect_boy_cont2": "Prefect Boy 2",
+    "prefect_boy_cont1": "HARSHAVARDHAN G",
+    "prefect_boy_cont2": "SANJAY R",
     "prefect_boy_cont3": "Prefect Boy 3",
     "prefect_boy_cont4": "Prefect Boy 4",
-    "prefect_girl_cont1": "Prefect Girl 1",
-    "prefect_girl_cont2": "Prefect Girl 2",
+    "prefect_girl_cont1": "MAANYA R JAIN",
+    "prefect_girl_cont2": "DHARANNIKA GR",
     "prefect_girl_cont3": "Prefect Girl 3",
     "prefect_girl_cont4": "Prefect Girl 4",
-    "student_council_cont1": "Student Council 1",
-    "student_council_cont2": "Student Council 2",
-    "student_council_cont3": "Student Council 3",
+    "student_council_cont1": "PRANITHA PRABU",
+    "student_council_cont2": "SREE SHRAVAN K",
+    "student_council_cont3": "GAURAV AGARWAL",
     "student_council_cont4": "Student Council 4"
 };
 
@@ -79,23 +79,23 @@ function populateTable() {
 
         // Define categories and their respective contestants
         const categoryContestants = {
-            "Boy Prefect": ["prefect_boy_cont1", "prefect_boy_cont2", "prefect_boy_cont3", "prefect_boy_cont4"],
-            "Girl Prefect": ["prefect_girl_cont1", "prefect_girl_cont2", "prefect_girl_cont3", "prefect_girl_cont4"],
-            "Student Council": ["student_council_cont1", "student_council_cont2", "student_council_cont3", "student_council_cont4"],
-            "Pine Captain": ["pine_captain_cont1", "pine_captain_cont2", "pine_captain_cont3", "pine_captain_cont4"],
-            "Pine Vice Captain": ["pine_vc_cont1", "pine_vc_cont2", "pine_vc_cont3", "pine_vc_cont4"],
-            "Cedar Captain": ["cedar_captain_cont1", "cedar_captain_cont2", "cedar_captain_cont3", "cedar_captain_cont4"],
-            "Cedar Vice Captain": ["cedar_vc_cont1", "cedar_vc_cont2", "cedar_vc_cont3", "cedar_vc_cont4"],
-            "Maple Captain": ["maple_captain_cont1", "maple_captain_cont2", "maple_captain_cont3", "maple_captain_cont4"],
-            "Maple Vice Captain": ["maple_vc_cont1", "maple_vc_cont2", "maple_vc_cont3", "maple_vc_cont4"],
-            "Oak Captain": ["oak_captain_cont1", "oak_captain_cont2", "oak_captain_cont3", "oak_captain_cont4"],
-            "Oak Vice Captain": ["oak_vc_cont1", "oak_vc_cont2", "oak_vc_cont3", "oak_vc_cont4"]
+            "Boy Prefect": ["prefect_boy_cont1", "prefect_boy_cont2"],
+            "Girl Prefect": ["prefect_girl_cont1", "prefect_girl_cont2" ],
+            "Student Council": ["student_council_cont1", "student_council_cont2", "student_council_cont3"],
+            "Pine Captain": ["pine_captain_cont1", "pine_captain_cont2"],
+            "Pine Vice Captain": ["pine_vc_cont1", "pine_vc_cont2"],
+            "Cedar Captain": ["cedar_captain_cont1", "cedar_captain_cont2"],
+            "Cedar Vice Captain": ["cedar_vc_cont1"],
+            "Maple Captain": ["maple_captain_cont1", "maple_captain_cont2"],
+            "Maple Vice Captain": ["maple_vc_cont1"],
+            "Oak Captain": ["oak_captain_cont1", "oak_captain_cont2", "oak_captain_cont3"],
+            "Oak Vice Captain": ["oak_vc_cont1", "oak_vc_cont2"]
         };
 
         // Loop through categories
         Object.entries(categoryContestants).forEach(([category, contestants]) => {
             const categoryVotes = contestants.map(contestant => {
-                const candidateName = fakeNames[contestant] || contestant;
+                const candidateName = Names[contestant] || contestant;
                 const votes = countTrueValues(snapshot.val()[contestant]);
                 return `<tr><td>${candidateName}</td><td>${votes}</td></tr>`;
             }).join(""); // Join contestant votes for this category into a single string
