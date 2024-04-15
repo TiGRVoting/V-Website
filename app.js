@@ -191,25 +191,30 @@ function updateSecondTable() {
         // Create a row for each category
         const row = document.createElement('tr');
         
-        // Create the first cell for the category and top contestant name
+        // Create the first cell for the category name
         const categoryCell = document.createElement('td');
-        categoryCell.textContent = `${category}: ${topContestant.contestant || 'null'}`;
+        categoryCell.textContent = category;
         
-        // Create the second cell for the top-voted candidate's image
-        const imageCell = document.createElement('td');
-        if (topContestant && topContestant.votes > 0) {
-            // Create an image element for the top-voted candidate
+        // Create the second cell for the top-voted contestant's name and image
+        const contestantCell = document.createElement('td');
+        if (topContestant.contestant) {
+            // Add top-voted contestant's name
+            const contestantNameElement = document.createElement('div');
+            contestantNameElement.textContent = topContestant.contestant;
+            contestantCell.appendChild(contestantNameElement);
+            
+            // Add the image (using the provided URL as an example)
             const imgElement = document.createElement('img');
-            imgElement.src = candidateImageURL;
+            // Assuming the image URL maps to the contestant's name
+            imgElement.src = 'https://github.com/TiGRVoting/V-Website/raw/c151a467e55311f3935dc6d39e2ec9d81c620eea/Images/thrivikram.png'; // Adjust the URL mapping as needed
             imgElement.alt = topContestant.contestant;
-            imgElement.style.width = '150px';
-            imgElement.style.height = '150px';
+            imgElement.style.width = '100px';
+            imgElement.style.height = '100px';
             imgElement.style.borderRadius = '5px';
-            imgElement.style.cursor = 'pointer'; // Add cursor pointer for clickability
+            imgElement.style.cursor = 'pointer'; // Optional: Add cursor pointer for clickability
 
-            // Add click event listener to enlarge the image when clicked
+            // Add a click event to enlarge the image
             imgElement.addEventListener('click', () => {
-                // Create a modal to display the enlarged image
                 const modal = document.createElement('div');
                 modal.style.position = 'fixed';
                 modal.style.top = '0';
@@ -221,37 +226,33 @@ function updateSecondTable() {
                 modal.style.justifyContent = 'center';
                 modal.style.alignItems = 'center';
                 modal.style.zIndex = '9999';
-
-                // Create an image element for the enlarged image
+                
                 const enlargedImg = document.createElement('img');
                 enlargedImg.src = imgElement.src;
                 enlargedImg.alt = imgElement.alt;
                 enlargedImg.style.maxWidth = '90%';
                 enlargedImg.style.maxHeight = '90%';
                 enlargedImg.style.borderRadius = '10px';
-
-                // Add click event listener to close the modal when the image is clicked
+                
+                // Close modal on click
                 enlargedImg.addEventListener('click', () => {
                     modal.remove();
                 });
-
-                // Add the enlarged image to the modal
+                
+                // Add image to modal and modal to document
                 modal.appendChild(enlargedImg);
-
-                // Add the modal to the document body
                 document.body.appendChild(modal);
             });
-
-            // Append the image element to the cell
-            imageCell.appendChild(imgElement);
+            
+            contestantCell.appendChild(imgElement);
         } else {
-            imageCell.textContent = 'null';
+            contestantCell.textContent = 'null';
         }
 
-        // Append the cells to the row
+        // Append the category and contestant cells to the row
         row.appendChild(categoryCell);
-        row.appendChild(imageCell);
-
+        row.appendChild(contestantCell);
+        
         // Append the row to the second table body
         secondTableBody.appendChild(row);
     }
