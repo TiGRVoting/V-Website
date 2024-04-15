@@ -207,9 +207,9 @@ function updateSecondTable() {
             imgElement.style.width = '100px';
             imgElement.style.height = '100px';
             imgElement.style.borderRadius = '5px';
-            imgElement.style.cursor = 'pointer'; // Optional: Add cursor pointer for clickability
+            imgElement.style.cursor = 'pointer';
             
-            // Add a click event to enlarge the image in full screen
+            // Add a click event to enlarge the image to fit the full screen
             imgElement.addEventListener('click', () => {
                 // Create a full screen modal
                 const modal = document.createElement('div');
@@ -223,15 +223,15 @@ function updateSecondTable() {
                 modal.style.justifyContent = 'center';
                 modal.style.alignItems = 'center';
                 modal.style.zIndex = '9999';
-                
+
                 // Create an enlarged image element
                 const enlargedImg = document.createElement('img');
                 enlargedImg.src = imgElement.src;
                 enlargedImg.alt = imgElement.alt;
-                enlargedImg.style.maxWidth = '95%';
-                enlargedImg.style.maxHeight = '95%';
-                enlargedImg.style.objectFit = 'contain'; // Maintain aspect ratio
-                enlargedImg.style.cursor = 'pointer'; // Optional: Add cursor pointer to close the modal
+                enlargedImg.style.width = '100%';
+                enlargedImg.style.height = '100%';
+                enlargedImg.style.objectFit = 'contain'; // Maintain aspect ratio and fill screen
+                enlargedImg.style.cursor = 'pointer';
                 
                 // Add a click event to close the modal
                 enlargedImg.addEventListener('click', () => {
