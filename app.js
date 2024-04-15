@@ -224,29 +224,22 @@ function updateSecondTable() {
                 modal.style.alignItems = 'center';
                 modal.style.zIndex = '9999';
                 
-                // Create a container for the enlarged image
-                const imgContainer = document.createElement('div');
-                imgContainer.style.maxWidth = '100%';
-                imgContainer.style.maxHeight = '100%';
-                
                 // Create an enlarged image element
                 const enlargedImg = document.createElement('img');
                 enlargedImg.src = imgElement.src;
                 enlargedImg.alt = imgElement.alt;
-                enlargedImg.style.maxWidth = '100%';
-                enlargedImg.style.maxHeight = '100%';
+                enlargedImg.style.maxWidth = '95%';
+                enlargedImg.style.maxHeight = '95%';
                 enlargedImg.style.objectFit = 'contain'; // Maintain aspect ratio
+                enlargedImg.style.cursor = 'pointer'; // Optional: Add cursor pointer to close the modal
                 
                 // Add a click event to close the modal
-                modal.addEventListener('click', () => {
+                enlargedImg.addEventListener('click', () => {
                     document.body.removeChild(modal);
                 });
                 
-                // Append the enlarged image to the container
-                imgContainer.appendChild(enlargedImg);
-                
-                // Append the container to the modal
-                modal.appendChild(imgContainer);
+                // Append the enlarged image to the modal
+                modal.appendChild(enlargedImg);
                 
                 // Append the modal to the document body
                 document.body.appendChild(modal);
