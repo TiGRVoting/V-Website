@@ -202,7 +202,7 @@ function updateSecondTable() {
             
             // Add the image (using the provided URL as an example)
             const imgElement = document.createElement('img');
-            imgElement.src = 'https://github.com/TiGRVoting/V-Website/raw/c151a467e55311f3935dc6d39e2ec9d81c620eea/Images/thrivikram.png';
+            imgElement.src = 'https://github.com/TiGRVoting/V-Website/blob/a880e9d7d71c826ed6beba70983fb6d3f649e7c8/Images/placeholder.png?raw=true'; // Placeholder image URL for null values
             imgElement.alt = topContestant.contestant;
             imgElement.style.width = '100px';
             imgElement.style.height = '100px';
@@ -247,7 +247,52 @@ function updateSecondTable() {
 
             contestantCell.appendChild(imgElement);
         } else {
-            contestantCell.textContent = 'null';
+            // Add a placeholder image for null values
+            const imgElement = document.createElement('img');
+            imgElement.src = 'https://github.com/TiGRVoting/V-Website/blob/a880e9d7d71c826ed6beba70983fb6d3f649e7c8/Images/placeholder.png?raw=true'; // Placeholder image URL
+            imgElement.alt = 'Placeholder';
+            imgElement.style.width = '100px';
+            imgElement.style.height = '100px';
+            imgElement.style.borderRadius = '5px';
+            imgElement.style.cursor = 'pointer';
+            
+            // Add a click event to enlarge the image to fit the full screen
+            imgElement.addEventListener('click', () => {
+                // Create a full screen modal
+                const modal = document.createElement('div');
+                modal.style.position = 'fixed';
+                modal.style.top = 0;
+                modal.style.left = 0;
+                modal.style.width = '100%';
+                modal.style.height = '100%';
+                modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                modal.style.display = 'flex';
+                modal.style.justifyContent = 'center';
+                modal.style.alignItems = 'center';
+                modal.style.zIndex = '9999';
+
+                // Create an enlarged image element
+                const enlargedImg = document.createElement('img');
+                enlargedImg.src = imgElement.src;
+                enlargedImg.alt = imgElement.alt;
+                enlargedImg.style.width = '100%';
+                enlargedImg.style.height = '100%';
+                enlargedImg.style.objectFit = 'contain'; // Maintain aspect ratio and fill screen
+                enlargedImg.style.cursor = 'pointer';
+                
+                // Add a click event to close the modal
+                enlargedImg.addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+                
+                // Append the enlarged image to the modal
+                modal.appendChild(enlargedImg);
+                
+                // Append the modal to the document body
+                document.body.appendChild(modal);
+            });
+
+            contestantCell.appendChild(imgElement);
         }
 
         // Append the category and contestant cells to the row
