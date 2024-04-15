@@ -150,9 +150,6 @@ function populateSecondTable() {
 }
 
 // Function to update Table 2 with top-voted contestants for each category
-// Function to update Table 2 with top-voted contestants for each category
-// Function to update Table 2 with top-voted contestants for each category
-// Function to update Table 2 with top-voted contestants for each category
 function updateSecondTable() {
     const topContestants = {};
 
@@ -214,16 +211,45 @@ function updateSecondTable() {
             
             // Add a click event to enlarge the image in full screen
             imgElement.addEventListener('click', () => {
-                // Request full screen for the image
-                if (imgElement.requestFullscreen) {
-                    imgElement.requestFullscreen();
-                } else if (imgElement.mozRequestFullScreen) { // Firefox
-                    imgElement.mozRequestFullScreen();
-                } else if (imgElement.webkitRequestFullscreen) { // Chrome and Safari
-                    imgElement.webkitRequestFullscreen();
-                } else if (imgElement.msRequestFullscreen) { // IE
-                    imgElement.msRequestFullscreen();
-                }
+                // Create a full screen modal
+                const modal = document.createElement('div');
+                modal.style.position = 'fixed';
+                modal.style.top = 0;
+                modal.style.left = 0;
+                modal.style.width = '100%';
+                modal.style.height = '100%';
+                modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                modal.style.display = 'flex';
+                modal.style.justifyContent = 'center';
+                modal.style.alignItems = 'center';
+                modal.style.zIndex = '9999';
+                
+                // Create a container for the enlarged image
+                const imgContainer = document.createElement('div');
+                imgContainer.style.maxWidth = '100%';
+                imgContainer.style.maxHeight = '100%';
+                
+                // Create an enlarged image element
+                const enlargedImg = document.createElement('img');
+                enlargedImg.src = imgElement.src;
+                enlargedImg.alt = imgElement.alt;
+                enlargedImg.style.maxWidth = '100%';
+                enlargedImg.style.maxHeight = '100%';
+                enlargedImg.style.objectFit = 'contain'; // Maintain aspect ratio
+                
+                // Add a click event to close the modal
+                modal.addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+                
+                // Append the enlarged image to the container
+                imgContainer.appendChild(enlargedImg);
+                
+                // Append the container to the modal
+                modal.appendChild(imgContainer);
+                
+                // Append the modal to the document body
+                document.body.appendChild(modal);
             });
 
             contestantCell.appendChild(imgElement);
