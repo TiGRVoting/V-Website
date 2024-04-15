@@ -151,6 +151,7 @@ function populateSecondTable() {
 
 // Function to update Table 2 with top-voted contestants for each category
 // Function to update Table 2 with top-voted contestants for each category
+// Function to update Table 2 with top-voted contestants for each category
 function updateSecondTable() {
     const topContestants = {};
 
@@ -184,30 +185,35 @@ function updateSecondTable() {
     const secondTableBody = document.getElementById('second-table-body');
     secondTableBody.innerHTML = ''; // Clear previous data
 
-    const candidateImageURL = "https://github.com/TiGRVoting/V-Website/blob/ff08401ac009f8369ad648be10e5f3548bfe0433/Images/rithik.JPG?raw=true"; // For now, same image for all candidates
+    const candidateImageURL = "https://github.com/TiGRVoting/V-Website/blob/ff08401ac009f8369ad648be10e5f3548bfe0433/Images/rithik.JPG?raw=true"; // Replace with the actual URL for candidates' images
 
     // Iterate through the categories and create rows with images for top-voted candidates
     for (const [category, topContestant] of Object.entries(topContestants)) {
         // Create a row for each category
         const row = document.createElement('tr');
         
-        // Create the first cell for the category
+        // Create the first cell for the category and top contestant name
         const categoryCell = document.createElement('td');
-        categoryCell.textContent = category;
+        if (topContestant && topContestant.contestant) {
+            // Display the category and top contestant's name
+            categoryCell.textContent = `${category}: ${topContestant.contestant}`;
+        } else {
+            categoryCell.textContent = `${category}: null`;
+        }
         
         // Create the second cell for the top-voted candidate's image
         const imageCell = document.createElement('td');
         if (topContestant && topContestant.votes > 0) {
             // Create an image element for the top-voted candidate
             const imgElement = document.createElement('img');
-            imgElement.src = candidateImageURL;
+            imgElement.src = candidateImageURL; // You should replace this URL with the actual URL for candidates' images
             imgElement.alt = topContestant.contestant;
-            imgElement.style.width = '100px'; // Adjust the width as desired
-            imgElement.style.height = '100px'; // Adjust the height as desired
-            imgElement.style.borderRadius = '5px'; // Optional: add border radius for rounded corners
+            imgElement.style.width = '150px'; // Adjust the width to 150px
+            imgElement.style.height = '150px'; // Adjust the height to 150px
+            imgElement.style.borderRadius = '5px';
             imageCell.appendChild(imgElement);
         } else {
-            // Set the cell content to "null" if there is no top contestant or votes
+            // Set the cell content to 'null' if there is no top contestant or votes
             imageCell.textContent = 'null';
         }
 
@@ -219,7 +225,6 @@ function updateSecondTable() {
         secondTableBody.appendChild(row);
     }
 }
-
 // Function to count true values in an object
 function countTrueValues(obj) {
     return Object.values(obj).filter(value => value === true).length;
