@@ -61,48 +61,57 @@
             font-size: 17px;
         }
 
+        /* Styling for the container of the second table */
         .second-table {
-            width: 100%; /* Adjust width if needed */
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            max-height: 600px;
-            overflow-y: auto;
+            width: 100%; /* Set the width to occupy full width */
+            display: flex; /* Use flex layout */
+            align-items: center; /* Center items vertically */
+            justify-content: space-between; /* Space out items evenly */
+            max-height: 600px; /* Set max height for scrolling */
+            overflow-y: auto; /* Allow vertical scrolling if needed */
             box-shadow: 0px 5px 20px;
             padding: 20px;
-            margin-top: 500px;
+            margin-top: 500px; /* Adjust margins as desired */
             margin-bottom: 320px;
-            margin-left: 1%;
+            margin-left: 1%; /* Adjust margins as desired */
             margin-right: 5%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.5); /* Transparent black background */
             color: white;
-            border: 5px solid black;
-            border-radius: 10px;
+            border: 5px solid black; /* Black border */
+            border-radius: 10px; /* Rounded corners */
         }
-
+        
+        /* Styling for the second table itself */
         .second-table table {
-            width: auto;
+            width: auto; /* Allow table width to adjust as needed */
             border-collapse: collapse;
-            border: none;
+            border: none; /* Remove border for the table */
+            display: flex; /* Flex layout for the table */
+            justify-content: space-around; /* Space out the columns evenly */
+            align-items: center; /* Center items vertically */
         }
-
+        
+        /* Styling for table headers and cells */
         .second-table th,
         .second-table td {
-            padding: 20px;
-            text-align: center;
-            font-size: 17px;
-            border: none;
+            padding: 20px; /* Padding inside cells */
+            text-align: center; /* Center text inside cells */
+            font-size: 17px; /* Font size for text */
+            border: none; /* Remove border from table elements */
+            width: auto; /* Allow cells to adjust width as needed */
         }
-
+        
+        /* Styling for even rows in the second table */
         .second-table tr:nth-child(even) {
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255, 255, 255, 0.1); /* Light background for even rows */
         }
-
-        img {
-            width: auto; /* Adjust width if needed */
-            height: 200px; /* Adjust height as needed */
-            border-radius: 5px;
-            object-fit: cover;
+        
+        /* Styling for images in the second table */
+        .second-table img {
+            width: auto; /* Allow the width to adjust as needed */
+            height: 200px; /* Set image height */
+            border-radius: 5px; /* Rounded corners */
+            object-fit: cover; /* Maintain aspect ratio of the image */
         }
     </style>
 </head>
