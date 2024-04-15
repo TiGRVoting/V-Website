@@ -207,18 +207,18 @@ function updateSecondTable() {
             imgElement.style.borderRadius = '5px'; // Optional: add border radius for rounded corners
             imageCell.appendChild(imgElement);
         } else {
-            // If there is no top contestant or votes, set the cell content to 'null'
+            // Set the cell content to "null" if there is no top contestant or votes
             imageCell.textContent = 'null';
         }
-    
-        // Append cells to the row
+
+        // Append the cells to the row
         row.appendChild(categoryCell);
-        row.appendChild(contestantCell);
         row.appendChild(imageCell);
-    
+
         // Append the row to the second table body
         secondTableBody.appendChild(row);
     }
+}
 
 // Function to count true values in an object
 function countTrueValues(obj) {
@@ -237,4 +237,3 @@ window.onload = function() {
     populateTable();
     populateSecondTable();
 };
-
