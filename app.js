@@ -200,9 +200,9 @@ function updateSecondTable() {
             contestantNameElement.textContent = topContestant.contestant;
             contestantCell.appendChild(contestantNameElement);
             
-            // Add the image (using the provided URL as an example)
+            // Add the image for the contestant
             const imgElement = document.createElement('img');
-            imgElement.src = 'https://raw.githubusercontent.com/TiGRVoting/V-Website/a880e9d7d71c826ed6beba70983fb6d3f649e7c8/Images/placeholder.png'; // Placeholder image URL for null values
+            imgElement.src = `https://raw.githubusercontent.com/TiGRVoting/V-Website/e13bda73610b18605e7168020ae57dbc7e2803c4/Images/${topContestant.contestant.replace(/\s/g, '_').toLowerCase()}.png`;
             imgElement.alt = topContestant.contestant;
             imgElement.style.width = '100px';
             imgElement.style.height = '100px';
@@ -228,9 +228,9 @@ function updateSecondTable() {
                 const enlargedImg = document.createElement('img');
                 enlargedImg.src = imgElement.src;
                 enlargedImg.alt = imgElement.alt;
-                enlargedImg.style.width = '100%';
-                enlargedImg.style.height = '100%';
-                enlargedImg.style.objectFit = 'contain'; // Maintain aspect ratio and fill screen
+                enlargedImg.style.maxWidth = '100%';
+                enlargedImg.style.maxHeight = '100%';
+                enlargedImg.style.objectFit = 'contain'; // Maintain aspect ratio and fit in screen
                 enlargedImg.style.cursor = 'pointer';
                 
                 // Add a click event to close the modal
@@ -249,7 +249,7 @@ function updateSecondTable() {
         } else {
             // Add a placeholder image for null values
             const imgElement = document.createElement('img');
-            imgElement.src = 'https://raw.githubusercontent.com/TiGRVoting/V-Website/a880e9d7d71c826ed6beba70983fb6d3f649e7c8/Images/placeholder.png'; // Placeholder image URL
+            imgElement.src = 'https://raw.githubusercontent.com/TiGRVoting/V-Website/a880e9d7d71c826ed6beba70983fb6d3f649e7c8/Images/placeholder.png';
             imgElement.alt = 'Placeholder';
             imgElement.style.width = '100px';
             imgElement.style.height = '100px';
@@ -275,9 +275,9 @@ function updateSecondTable() {
                 const enlargedImg = document.createElement('img');
                 enlargedImg.src = imgElement.src;
                 enlargedImg.alt = imgElement.alt;
-                enlargedImg.style.width = '100%';
-                enlargedImg.style.height = '100%';
-                enlargedImg.style.objectFit = 'contain'; // Maintain aspect ratio and fill screen
+                enlargedImg.style.maxWidth = '100%';
+                enlargedImg.style.maxHeight = '100%';
+                enlargedImg.style.objectFit = 'contain'; // Maintain aspect ratio and fit in screen
                 enlargedImg.style.cursor = 'pointer';
                 
                 // Add a click event to close the modal
@@ -303,6 +303,7 @@ function updateSecondTable() {
         secondTableBody.appendChild(row);
     }
 }
+
 // Function to count true values in an object
 function countTrueValues(obj) {
     return Object.values(obj).filter(value => value === true).length;
