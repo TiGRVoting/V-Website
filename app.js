@@ -152,6 +152,7 @@ function populateSecondTable() {
 // Function to update Table 2 with top-voted contestants for each category
 // Function to update Table 2 with top-voted contestants for each category
 // Function to update Table 2 with top-voted contestants for each category
+// Function to update Table 2 with top-voted contestants for each category
 function updateSecondTable() {
     const topContestants = {};
 
@@ -185,8 +186,6 @@ function updateSecondTable() {
     const secondTableBody = document.getElementById('second-table-body');
     secondTableBody.innerHTML = ''; // Clear previous data
 
-    const candidateImageURL = "https://github.com/TiGRVoting/V-Website/blob/ff08401ac009f8369ad648be10e5f3548bfe0433/Images/rithik.JPG?raw=true"; // Replace with the actual URL for candidates' images
-
     // Iterate through the categories and create rows with images for top-voted candidates
     for (const [category, topContestant] of Object.entries(topContestants)) {
         // Create a row for each category
@@ -194,26 +193,58 @@ function updateSecondTable() {
         
         // Create the first cell for the category and top contestant name
         const categoryCell = document.createElement('td');
-        if (topContestant && topContestant.contestant) {
-            // Display the category and top contestant's name
-            categoryCell.textContent = `${category}: ${topContestant.contestant}`;
-        } else {
-            categoryCell.textContent = `${category}: null`;
-        }
+        categoryCell.textContent = `${category}: ${topContestant.contestant || 'null'}`;
         
         // Create the second cell for the top-voted candidate's image
         const imageCell = document.createElement('td');
         if (topContestant && topContestant.votes > 0) {
             // Create an image element for the top-voted candidate
             const imgElement = document.createElement('img');
-            imgElement.src = candidateImageURL; // You should replace this URL with the actual URL for candidates' images
+            imgElement.src = candidateImageURL;
             imgElement.alt = topContestant.contestant;
-            imgElement.style.width = '150px'; // Adjust the width to 150px
-            imgElement.style.height = '150px'; // Adjust the height to 150px
+            imgElement.style.width = '150px';
+            imgElement.style.height = '150px';
             imgElement.style.borderRadius = '5px';
+            imgElement.style.cursor = 'pointer'; // Add cursor pointer for clickability
+
+            // Add click event listener to enlarge the image when clicked
+            imgElement.addEventListener('click', () => {
+                // Create a modal to display the enlarged image
+                const modal = document.createElement('div');
+                modal.style.position = 'fixed';
+                modal.style.top = '0';
+                modal.style.left = '0';
+                modal.style.width = '100%';
+                modal.style.height = '100%';
+                modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                modal.style.display = 'flex';
+                modal.style.justifyContent = 'center';
+                modal.style.alignItems = 'center';
+                modal.style.zIndex = '9999';
+
+                // Create an image element for the enlarged image
+                const enlargedImg = document.createElement('img');
+                enlargedImg.src = imgElement.src;
+                enlargedImg.alt = imgElement.alt;
+                enlargedImg.style.maxWidth = '90%';
+                enlargedImg.style.maxHeight = '90%';
+                enlargedImg.style.borderRadius = '10px';
+
+                // Add click event listener to close the modal when the image is clicked
+                enlargedImg.addEventListener('click', () => {
+                    modal.remove();
+                });
+
+                // Add the enlarged image to the modal
+                modal.appendChild(enlargedImg);
+
+                // Add the modal to the document body
+                document.body.appendChild(modal);
+            });
+
+            // Append the image element to the cell
             imageCell.appendChild(imgElement);
         } else {
-            // Set the cell content to 'null' if there is no top contestant or votes
             imageCell.textContent = 'null';
         }
 
