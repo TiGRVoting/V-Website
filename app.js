@@ -230,7 +230,7 @@ function updateSecondTable() {
             contestantNameElement.textContent = topContestant.contestant;
             contestantCell.appendChild(contestantNameElement);
             
-            // Add the image
+// In the function where you create the image element
             const imgElement = document.createElement('img');
             imgElement.src = getImageURL(topContestant.contestant); // Get image URL based on contestant name
             imgElement.alt = topContestant.contestant;
@@ -238,6 +238,10 @@ function updateSecondTable() {
             imgElement.style.height = '100px';
             imgElement.style.borderRadius = '5px';
             imgElement.style.cursor = 'pointer';
+            
+            // Append the image to the contestant cell
+            contestantCell.appendChild(imgElement);
+
             
             // Add a click event to enlarge the image to fit the full screen
             imgElement.addEventListener('click', () => {
