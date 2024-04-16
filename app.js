@@ -72,23 +72,41 @@ const Names = {
 };
 
 // Function to fetch data and populate table
-// Function to fetch data and populate table
 function populateTable() {
-    console.log("Populating Table...");
     onValue(resultRef, (snapshot) => {
-        console.log("Data Snapshot:", snapshot.val());
-
         // Clear previous data
         document.getElementById("table-body").innerHTML = "";
 
         // Define categories and their respective contestants
         const categoryContestants = {
-            // category-contestants mapping...
+            "Boy Prefect": ["prefect_boy_cont1", "prefect_boy_cont2"],
+            "Girl Prefect": ["prefect_girl_cont1", "prefect_girl_cont2" ],
+            "Student Council": ["student_council_cont1", "student_council_cont2", "student_council_cont3"],
+            "Pine Captain": ["pine_captain_cont1", "pine_captain_cont2"],
+            "Pine Vice Captain": ["pine_vc_cont1", "pine_vc_cont2"],
+            "Cedar Captain": ["cedar_captain_cont1", "cedar_captain_cont2"],
+            "Cedar Vice Captain": ["cedar_vc_cont1"],
+            "Maple Captain": ["maple_captain_cont1", "maple_captain_cont2"],
+            "Maple Vice Captain": ["maple_vc_cont1"],
+            "Oak Captain": ["oak_captain_cont1", "oak_captain_cont2", "oak_captain_cont3"],
+            "Oak Vice Captain": ["oak_vc_cont1", "oak_vc_cont2"]
         };
 
         // Loop through categories
         Object.entries(categoryContestants).forEach(([category, contestants]) => {
-            // Loop through contestants...
+            const categoryVotes = contestants.map(contestant => {
+                const candidateName = Names[contestant] || contestant;
+                const votes = countTrueValues(snapshot.val()[contestant]);
+                return `<tr><td>${candidateName}</td><td>${votes}</td></tr>`;
+            }).join(""); // Join contestant votes for this category into a single string
+
+            // Append category votes to table body
+            document.getElementById("table-body").innerHTML += `
+                <tr>
+                    <td colspan="2" style="background-color: black; color: white; font-weight: bold;">${category}</td>
+                </tr>
+                ${categoryVotes}
+            `;
         });
 
         // After populating the table, update the second table
@@ -96,6 +114,8 @@ function populateTable() {
     });
 }
 
+// Function to populate the second table with top-voted contestants in each category
+// Function to populate the second table with top-voted contestants in each category
 // Function to populate the second table with top-voted contestants in each category
 function populateSecondTable() {
     const secondTableBody = document.getElementById('second-table-body');
@@ -129,7 +149,6 @@ function populateSecondTable() {
     });
 }
 
-// Function to update Table 2 with top-voted contestants for each category
 // Function to update Table 2 with top-voted contestants for each category
 // Function to update Table 2 with top-voted contestants for each category
 function updateSecondTable() {
@@ -235,68 +254,6 @@ function updateSecondTable() {
         });
     }
 }
-    // Populate the second table with the top-voted candidates' names and images
-    const secondTableBody = document.getElementById('second-table-body');
-    secondTableBody.innerHTML = ''; // Clear previous data
-
-    // Iterate through the categories and create rows with top-voted candidates
-    for (const [category, topContestantsArray] of Object.entries(topContestants)) {
-        const row = document.createElement('tr');
-        
-        const categoryCell = document.createElement('td');
-        categoryCell.textContent = category;
-        row.appendChild(categoryCell);
-        
-        const contestantCell = document.createElement('td');
-        
-        // Iterate through all contestants with the same maximum vote count
-        topContestantsArray.forEach(topContestant => {
-            const contestantNameElement = document.createElement('div');
-            contestantNameElement.textContent = topContestant.contestant;
-            contestantCell.appendChild(contestantNameElement);
-
-            const imgElement = document.createElement('img');
-            imgElement.src = getImageURL(topContestant.contestant); // You must implement this function to get the correct URL for each contestant
-            imgElement.alt = topContestant.contestant;
-            imgElement.style.width = '100px';
-            imgElement.style.height = '100px';
-            imgElement.style.borderRadius = '5px';
-
-            // Add a click event to enlarge the image
-            imgElement.addEventListener('click', () => {
-                const modal = document.createElement('div');
-                modal.style.position = 'fixed';
-                modal.style.top = 0;
-                modal.style.left = 0;
-                modal.style.width = '100%';
-                modal.style.height = '100%';
-                modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-                modal.style.display = 'flex';
-                modal.style.justifyContent = 'center';
-                modal.style.alignItems = 'center';
-                modal.style.zIndex = '9999';
-
-                const enlargedImg = document.createElement('img');
-                enlargedImg.src = imgElement.src;
-                enlargedImg.alt = imgElement.alt;
-                enlargedImg.style.maxWidth = '90%';
-                enlargedImg.style.maxHeight = '90%';
-                enlargedImg.style.objectFit = 'contain';
-                enlargedImg.addEventListener('click', () => {
-                    document.body.removeChild(modal);
-                });
-
-                modal.appendChild(enlargedImg);
-                document.body.appendChild(modal);
-            });
-
-            contestantCell.appendChild(imgElement);
-        });
-
-        row.appendChild(contestantCell);
-        secondTableBody.appendChild(row);
-    }
-}
 // Function to count true values in an object
 function countTrueValues(obj) {
     return Object.values(obj).filter(value => value === true).length;
@@ -308,20 +265,38 @@ function getCategoryFromContestant(contestant) {
     const category = contestant.split("_")[0] + " " + contestant.split("_")[1];
     return category;
 }
-// Function to retrieve the image URL based on the contestant name
 function getImageURL(contestant) {
-    // Define the image URLs based on the contestant name
+    // Define a dictionary of contestant names and their image URLs
     const imageUrls = {
+        "ADHAV K": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Aadhav%20K.JPG",
+        "ADITYA ASHOK": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Aditya%20Ashok.JPG",
+        "ARNAV": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Arnav.JPG",
+        "ATHULVINAYAK PRADEEP": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Athul%20Vinayak%20Pradeep.JPG",
+        "DHAIRYA BAGRI": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Dhairya%20Bagri.JPG",
+        "DHARANNIKA GR": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Dharannika%20GR.JPG",
+        "GAURAV AGARWAL": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Gaurav%20Agarwal.JPG",
+        "HAASHINI PRIYA CP": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Haashini%20Priya%20CP.JPG",
+        "HARSHAVARDHAN G": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Harshavardhan%20G.JPG",
+        "JAYANTH CB": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Jayanth%20CB.JPG",
         "KAVYA SA": "https://github.com/TiGRVoting/V-Website/blob/e13bda73610b18605e7168020ae57dbc7e2803c4/Images/thrivikram.png",
-        // Add other contestant names and their image URLs here
+        "MAANYA R JAIN": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Maanya%20R%20Jain.JPG",
+        "MAHI KISHORE SETHIA": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Mahi%20Kishore%20Sethia.JPG",
+        "NAMRRUTHA S": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Namrrutha%20S.JPG",
+        "NEBIN BOSE B": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Nebin%20Bose%20B.JPG",
+        "PRANITHA PRABU": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Pranitha%20Prabu.JPG",
+        "RISHAAN R RANKA": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Rishaan%20R%20Ranka.JPG",
+        "SANJAY R": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Sanjay%20R.JPG",
+        "SHASHANG R": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Shashang%20R.JPG",
+        "SIVNETHRAN SK": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Sivnethran%20SK.JPG",
+        "SREE SHRAVAN K": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Sree%20Shravan%20K.JPG",
+        "VINAYA SELVARAJ": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Vinaya%20Selvaraj.JPG"
     };
+    
     // Return the image URL for the given contestant name, or a placeholder URL if not found
     return imageUrls[contestant] || "https://github.com/TiGRVoting/V-Website/blob/a880e9d7d71c826ed6beba70983fb6d3f649e7c8/Images/placeholder";
 }
-
 // Call the function to populate Table 1 and Table 2 when the page loads
 window.onload = function() {
     populateTable();
-    populateSecondTable(); // Call populateSecondTable before updateSecondTable
-    updateSecondTable();
+    populateSecondTable();
 };
