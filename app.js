@@ -151,6 +151,7 @@ function populateSecondTable() {
 
 // Function to update Table 2 with top-voted contestants for each category
 // Function to update Table 2 with top-voted contestants for each category
+// Function to update Table 2 with top-voted contestants for each category
 function updateSecondTable() {
     const topContestants = {};
 
@@ -163,8 +164,8 @@ function updateSecondTable() {
         // Check if the row is a category header (background color is black)
         if (row.cells.length === 1 && row.cells[0].style.backgroundColor === 'black') {
             currentCategory = row.cells[0].textContent.trim();
-            // Initialize top contestant for the category
-            topContestants[currentCategory] = { contestant: null, votes: 0 };
+            // Initialize top contestants array for the category
+            topContestants[currentCategory] = [];
             continue;
         }
 
@@ -173,9 +174,10 @@ function updateSecondTable() {
             const candidate = row.cells[0].textContent;
             const votes = parseInt(row.cells[1].textContent);
 
-            // Check if the candidate has more votes than the current top contestant for the category
-            if (votes > topContestants[currentCategory].votes) {
-                topContestants[currentCategory] = { contestant: candidate, votes: votes };
+            // Check if the candidate has votes
+            if (votes > 0) {
+                // Add candidate to top contestants for the category
+                topContestants[currentCategory].push({ candidate: candidate, votes: votes });
             }
         }
     }
@@ -185,26 +187,29 @@ function updateSecondTable() {
     secondTableBody.innerHTML = ''; // Clear previous data
 
     // Iterate through the categories and create rows with images for top-voted candidates
-    for (const [category, topContestant] of Object.entries(topContestants)) {
-        // Create a row for each category
-        const row = document.createElement('tr');
+    for (const [category, contestants] of Object.entries(topContestants)) {
+        // Find the corresponding row in the second table
+        const row = secondTableBody.querySelector(`tr td:first-of-type:contains('${category}')`).parentNode;
         
-        // Create the first cell for the category
-        const categoryCell = document.createElement('td');
-        categoryCell.textContent = category;
-        
-        // Create the second cell for the top-voted contestant's name and image
-        const contestantCell = document.createElement('td');
-        if (topContestant.contestant) {
+        // Create the second cell for the top-voted contestant's names and images
+        const contestantCell = row.querySelector('td:last-of-type');
+        contestantCell.innerHTML = ''; // Clear previous content
+
+        // Filter contestants with the maximum number of votes
+        const maxVotes = Math.max(...contestants.map(c => c.votes));
+        const topContestantsInCategory = contestants.filter(c => c.votes === maxVotes);
+
+        // Add names and images for top contestants
+        topContestantsInCategory.forEach(contestant => {
             // Add top-voted contestant's name
             const contestantNameElement = document.createElement('div');
-            contestantNameElement.textContent = topContestant.contestant;
+            contestantNameElement.textContent = contestant.candidate;
             contestantCell.appendChild(contestantNameElement);
-            
-            // Add the image (using the provided URL as an example)
+
+            // Add the image
             const imgElement = document.createElement('img');
-            imgElement.src = 'https://github.com/TiGRVoting/V-Website/raw/c151a467e55311f3935dc6d39e2ec9d81c620eea/Images/thrivikram.png';
-            imgElement.alt = topContestant.contestant;
+            imgElement.src = getImageURL(contestant.candidate); // Function to get image URL based on contestant
+            imgElement.alt = contestant.candidate;
             imgElement.style.width = '100px';
             imgElement.style.height = '100px';
             imgElement.style.borderRadius = '5px';
@@ -247,16 +252,7 @@ function updateSecondTable() {
             });
 
             contestantCell.appendChild(imgElement);
-        } else {
-            contestantCell.textContent = 'null';
-        }
-
-        // Append the category and contestant cells to the row
-        row.appendChild(categoryCell);
-        row.appendChild(contestantCell);
-        
-        // Append the row to the second table body
-        secondTableBody.appendChild(row);
+        });
     }
 }
     // Populate the second table with the top-voted candidates' names and images
