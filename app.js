@@ -265,9 +265,20 @@ function getCategoryFromContestant(contestant) {
     const category = contestant.split("_")[0] + " " + contestant.split("_")[1];
     return category;
 }
+// Function to retrieve the image URL based on the contestant name
+function getImageURL(contestant) {
+    // Define the image URLs based on the contestant name
+    const imageUrls = {
+        "KAVYA SA": "https://github.com/TiGRVoting/V-Website/blob/e13bda73610b18605e7168020ae57dbc7e2803c4/Images/thrivikram.png",
+        // Add other contestant names and their image URLs here
+    };
+    // Return the image URL for the given contestant name, or a placeholder URL if not found
+    return imageUrls[contestant] || "https://github.com/TiGRVoting/V-Website/blob/a880e9d7d71c826ed6beba70983fb6d3f649e7c8/Images/placeholder";
+}
 
 // Call the function to populate Table 1 and Table 2 when the page loads
 window.onload = function() {
     populateTable();
-    populateSecondTable();
+    populateSecondTable(); // Call populateSecondTable before updateSecondTable
+    updateSecondTable();
 };
