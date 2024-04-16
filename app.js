@@ -149,6 +149,36 @@ function populateSecondTable() {
     });
 }
 
+function getImageURL(contestant) {
+    // Define a dictionary of contestant names and their image URLs
+    const imageUrls = {
+        "ADHAV K": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Aadhav%20K.JPG",
+        "ADITYA ASHOK": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Aditya%20Ashok.JPG",
+        "ARNAV": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Arnav.JPG",
+        "ATHULVINAYAK PRADEEP": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Athul%20Vinayak%20Pradeep.JPG",
+        "DHAIRYA BAGRI": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Dhairya%20Bagri.JPG",
+        "DHARANNIKA GR": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Dharannika%20GR.JPG",
+        "GAURAV AGARWAL": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Gaurav%20Agarwal.JPG",
+        "HAASHINI PRIYA CP": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Haashini%20Priya%20CP.JPG",
+        "HARSHAVARDHAN G": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Harshavardhan%20G.JPG",
+        "JAYANTH CB": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Jayanth%20CB.JPG",
+        "KAVYA SA": "https://github.com/TiGRVoting/V-Website/blob/e13bda73610b18605e7168020ae57dbc7e2803c4/Images/thrivikram.png",
+        "MAANYA R JAIN": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Maanya%20R%20Jain.JPG",
+        "MAHI KISHORE SETHIA": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Mahi%20Kishore%20Sethia.JPG",
+        "NAMRRUTHA S": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Namrrutha%20S.JPG",
+        "NEBIN BOSE B": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Nebin%20Bose%20B.JPG",
+        "PRANITHA PRABU": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Pranitha%20Prabu.JPG",
+        "RISHAAN R RANKA": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Rishaan%20R%20Ranka.JPG",
+        "SANJAY R": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Sanjay%20R.JPG",
+        "SHASHANG R": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Shashang%20R.JPG",
+        "SIVNETHRAN SK": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Sivnethran%20SK.JPG",
+        "SREE SHRAVAN K": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Sree%20Shravan%20K.JPG",
+        "VINAYA SELVARAJ": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Vinaya%20Selvaraj.JPG"
+    };
+    
+    // Return the image URL for the given contestant name, or a placeholder URL if not found
+    return imageUrls[contestant] || "https://github.com/TiGRVoting/V-Website/blob/a880e9d7d71c826ed6beba70983fb6d3f649e7c8/Images/placeholder";
+}
 // Function to update Table 2 with top-voted contestants for each category
 function updateSecondTable() {
     const topContestants = {};
@@ -200,9 +230,9 @@ function updateSecondTable() {
             contestantNameElement.textContent = topContestant.contestant;
             contestantCell.appendChild(contestantNameElement);
             
-            // Add the image (using the provided URL as an example)
+            // Add the image
             const imgElement = document.createElement('img');
-            imgElement.src = 'https://github.com/TiGRVoting/V-Website/raw/c151a467e55311f3935dc6d39e2ec9d81c620eea/Images/thrivikram.png';
+            imgElement.src = getImageURL(topContestant.contestant); // Get image URL based on contestant name
             imgElement.alt = topContestant.contestant;
             imgElement.style.width = '100px';
             imgElement.style.height = '100px';
@@ -241,16 +271,17 @@ function updateSecondTable() {
                 // Append the enlarged image to the modal
                 modal.appendChild(enlargedImg);
                 
-                // Append the modal to the document body
+                // Append the modal to the body
                 document.body.appendChild(modal);
             });
-
+            
+            // Append the image to the cell
             contestantCell.appendChild(imgElement);
         } else {
-            contestantCell.textContent = 'null';
+            contestantCell.textContent = 'No data';
         }
-
-        // Append the category and contestant cells to the row
+        
+        // Append cells to the row
         row.appendChild(categoryCell);
         row.appendChild(contestantCell);
         
