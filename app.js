@@ -72,41 +72,23 @@ const Names = {
 };
 
 // Function to fetch data and populate table
+// Function to fetch data and populate table
 function populateTable() {
+    console.log("Populating Table...");
     onValue(resultRef, (snapshot) => {
+        console.log("Data Snapshot:", snapshot.val());
+
         // Clear previous data
         document.getElementById("table-body").innerHTML = "";
 
         // Define categories and their respective contestants
         const categoryContestants = {
-            "Boy Prefect": ["prefect_boy_cont1", "prefect_boy_cont2"],
-            "Girl Prefect": ["prefect_girl_cont1", "prefect_girl_cont2" ],
-            "Student Council": ["student_council_cont1", "student_council_cont2", "student_council_cont3"],
-            "Pine Captain": ["pine_captain_cont1", "pine_captain_cont2"],
-            "Pine Vice Captain": ["pine_vc_cont1", "pine_vc_cont2"],
-            "Cedar Captain": ["cedar_captain_cont1", "cedar_captain_cont2"],
-            "Cedar Vice Captain": ["cedar_vc_cont1"],
-            "Maple Captain": ["maple_captain_cont1", "maple_captain_cont2"],
-            "Maple Vice Captain": ["maple_vc_cont1"],
-            "Oak Captain": ["oak_captain_cont1", "oak_captain_cont2", "oak_captain_cont3"],
-            "Oak Vice Captain": ["oak_vc_cont1", "oak_vc_cont2"]
+            // category-contestants mapping...
         };
 
         // Loop through categories
         Object.entries(categoryContestants).forEach(([category, contestants]) => {
-            const categoryVotes = contestants.map(contestant => {
-                const candidateName = Names[contestant] || contestant;
-                const votes = countTrueValues(snapshot.val()[contestant]);
-                return `<tr><td>${candidateName}</td><td>${votes}</td></tr>`;
-            }).join(""); // Join contestant votes for this category into a single string
-
-            // Append category votes to table body
-            document.getElementById("table-body").innerHTML += `
-                <tr>
-                    <td colspan="2" style="background-color: black; color: white; font-weight: bold;">${category}</td>
-                </tr>
-                ${categoryVotes}
-            `;
+            // Loop through contestants...
         });
 
         // After populating the table, update the second table
@@ -114,8 +96,6 @@ function populateTable() {
     });
 }
 
-// Function to populate the second table with top-voted contestants in each category
-// Function to populate the second table with top-voted contestants in each category
 // Function to populate the second table with top-voted contestants in each category
 function populateSecondTable() {
     const secondTableBody = document.getElementById('second-table-body');
