@@ -150,113 +150,113 @@ function populateSecondTable() {
 }
 
 // Function to update Table 2 with top-voted contestants for each category
-// Function to update Table 2 with top-voted contestants for each category
-function populateSecondTable() {
-    const secondTableBody = document.getElementById('second-table-body');
-    secondTableBody.innerHTML = ''; // Clear previous data
+function updateSecondTable() {
+    const topContestants = {};
 
-    const topContestants = {}; // Initialize an empty object for top contestants in each category
-
-    // Iterate through the rows of the first table
+    // Iterate through the rows of Table 1
     let currentCategory = null;
     const tableRows = document.querySelectorAll('#table-body tr');
 
     // Gather top-voted contestants for each category
     for (const row of tableRows) {
-        // Check if the row is a category header
+        // Check if the row is a category header (background color is black)
         if (row.cells.length === 1 && row.cells[0].style.backgroundColor === 'black') {
             currentCategory = row.cells[0].textContent.trim();
-            topContestants[currentCategory] = [];
+            // Initialize top contestant for the category
+            topContestants[currentCategory] = { contestant: null, votes: 0 };
             continue;
         }
 
         // Otherwise, consider it as a candidate row
         if (currentCategory) {
-            const candidateName = row.cells[0].textContent;
+            const candidate = row.cells[0].textContent;
             const votes = parseInt(row.cells[1].textContent);
 
-            // Store the candidate and their votes in the topContestants object
-            topContestants[currentCategory].push({ candidate: candidateName, votes: votes });
+            // Check if the candidate has more votes than the current top contestant for the category
+            if (votes > topContestants[currentCategory].votes) {
+                topContestants[currentCategory] = { contestant: candidate, votes: votes };
+            }
         }
     }
 
-    // Now populate the second table with top-voted contestants
-    for (const [category, contestants] of Object.entries(topContestants)) {
-        // Find the contestants with the maximum number of votes in this category
-        const maxVotes = Math.max(...contestants.map(contestant => contestant.votes));
-        const topVotedContestants = contestants.filter(contestant => contestant.votes === maxVotes);
+    // Populate the second table with the top-voted candidates' images
+    const secondTableBody = document.getElementById('second-table-body');
+    secondTableBody.innerHTML = ''; // Clear previous data
 
-        // Create a new row for the second table
+    // Iterate through the categories and create rows with images for top-voted candidates
+    for (const [category, topContestant] of Object.entries(topContestants)) {
+        // Create a row for each category
         const row = document.createElement('tr');
-
-        // Add category cell
+        
+        // Create the first cell for the category
         const categoryCell = document.createElement('td');
         categoryCell.textContent = category;
-        row.appendChild(categoryCell);
-
-        // Add top-voted contestants cell
+        
+        // Create the second cell for the top-voted contestant's name and image
         const contestantCell = document.createElement('td');
-        topVotedContestants.forEach((contestant, index) => {
-            const div = document.createElement('div');
+        if (topContestant.contestant) {
+            // Add top-voted contestant's name
+            const contestantNameElement = document.createElement('div');
+            contestantNameElement.textContent = topContestant.contestant;
+            contestantCell.appendChild(contestantNameElement);
+            
+            // Add the image (using the provided URL as an example)
+            const imgElement = document.createElement('img');
+            imgElement.src = 'https://github.com/TiGRVoting/V-Website/raw/c151a467e55311f3935dc6d39e2ec9d81c620eea/Images/thrivikram.png';
+            imgElement.alt = topContestant.contestant;
+            imgElement.style.width = '100px';
+            imgElement.style.height = '100px';
+            imgElement.style.borderRadius = '5px';
+            imgElement.style.cursor = 'pointer';
+            
+            // Add a click event to enlarge the image to fit the full screen
+            imgElement.addEventListener('click', () => {
+                // Create a full screen modal
+                const modal = document.createElement('div');
+                modal.style.position = 'fixed';
+                modal.style.top = 0;
+                modal.style.left = 0;
+                modal.style.width = '100%';
+                modal.style.height = '100%';
+                modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                modal.style.display = 'flex';
+                modal.style.justifyContent = 'center';
+                modal.style.alignItems = 'center';
+                modal.style.zIndex = '9999';
 
-            // Add the contestant's name
-            const nameDiv = document.createElement('div');
-            nameDiv.textContent = contestant.candidate;
-            div.appendChild(nameDiv);
-
-            // Add the contestant's image
-            const img = document.createElement('img');
-            img.src = getImageURL(contestant.candidate);
-            img.alt = contestant.candidate;
-            img.style.width = '100px';
-            img.style.height = '100px';
-            img.style.borderRadius = '5px';
-            img.style.objectFit = 'cover';
-            img.style.cursor = 'pointer';
-
-            // Add click event for enlarging image
-            img.addEventListener('click', () => {
-                enlargeImage(img);
+                // Create an enlarged image element
+                const enlargedImg = document.createElement('img');
+                enlargedImg.src = imgElement.src;
+                enlargedImg.alt = imgElement.alt;
+                enlargedImg.style.width = '100%';
+                enlargedImg.style.height = '100%';
+                enlargedImg.style.objectFit = 'contain'; // Maintain aspect ratio and fill screen
+                enlargedImg.style.cursor = 'pointer';
+                
+                // Add a click event to close the modal
+                enlargedImg.addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+                
+                // Append the enlarged image to the modal
+                modal.appendChild(enlargedImg);
+                
+                // Append the modal to the document body
+                document.body.appendChild(modal);
             });
 
-            div.appendChild(img);
+            contestantCell.appendChild(imgElement);
+        } else {
+            contestantCell.textContent = 'null';
+        }
 
-            // Add the div to the contestant cell
-            contestantCell.appendChild(div);
-        });
-
+        // Append the category and contestant cells to the row
+        row.appendChild(categoryCell);
         row.appendChild(contestantCell);
+        
+        // Append the row to the second table body
         secondTableBody.appendChild(row);
     }
-}
-
-// A utility function to enlarge an image when clicked
-function enlargeImage(imgElement) {
-    const modal = document.createElement('div');
-    modal.style.position = 'fixed';
-    modal.style.top = 0;
-    modal.style.left = 0;
-    modal.style.width = '100%';
-    modal.style.height = '100%';
-    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-    modal.style.display = 'flex';
-    modal.style.justifyContent = 'center';
-    modal.style.alignItems = 'center';
-    modal.style.zIndex = '9999';
-
-    const enlargedImg = document.createElement('img');
-    enlargedImg.src = imgElement.src;
-    enlargedImg.alt = imgElement.alt;
-    enlargedImg.style.width = '100%';
-    enlargedImg.style.height = '100%';
-    enlargedImg.style.objectFit = 'contain';
-    enlargedImg.style.cursor = 'pointer';
-    enlargedImg.addEventListener('click', () => {
-        document.body.removeChild(modal);
-    });
-
-    modal.appendChild(enlargedImg);
-    document.body.appendChild(modal);
 }
 // Function to count true values in an object
 function countTrueValues(obj) {
@@ -269,36 +269,7 @@ function getCategoryFromContestant(contestant) {
     const category = contestant.split("_")[0] + " " + contestant.split("_")[1];
     return category;
 }
-function getImageURL(contestant) {
-    // Define a dictionary of contestant names and their image URLs
-    const imageUrls = {
-        "ADHAV K": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Aadhav%20K.JPG",
-        "ADITYA ASHOK": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Aditya%20Ashok.JPG",
-        "ARNAV": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Arnav.JPG",
-        "ATHULVINAYAK PRADEEP": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Athul%20Vinayak%20Pradeep.JPG",
-        "DHAIRYA BAGRI": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Dhairya%20Bagri.JPG",
-        "DHARANNIKA GR": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Dharannika%20GR.JPG",
-        "GAURAV AGARWAL": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Gaurav%20Agarwal.JPG",
-        "HAASHINI PRIYA CP": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Haashini%20Priya%20CP.JPG",
-        "HARSHAVARDHAN G": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Harshavardhan%20G.JPG",
-        "JAYANTH CB": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Jayanth%20CB.JPG",
-        "KAVYA SA": "https://github.com/TiGRVoting/V-Website/blob/e13bda73610b18605e7168020ae57dbc7e2803c4/Images/thrivikram.png",
-        "MAANYA R JAIN": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Maanya%20R%20Jain.JPG",
-        "MAHI KISHORE SETHIA": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Mahi%20Kishore%20Sethia.JPG",
-        "NAMRRUTHA S": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Namrrutha%20S.JPG",
-        "NEBIN BOSE B": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Nebin%20Bose%20B.JPG",
-        "PRANITHA PRABU": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Pranitha%20Prabu.JPG",
-        "RISHAAN R RANKA": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Rishaan%20R%20Ranka.JPG",
-        "SANJAY R": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Sanjay%20R.JPG",
-        "SHASHANG R": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Shashang%20R.JPG",
-        "SIVNETHRAN SK": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Sivnethran%20SK.JPG",
-        "SREE SHRAVAN K": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Sree%20Shravan%20K.JPG",
-        "VINAYA SELVARAJ": "https://github.com/TiGRVoting/V-Website/blob/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Vinaya%20Selvaraj.JPG"
-    };
-    
-    // Return the image URL for the given contestant name, or a placeholder URL if not found
-    return imageUrls[contestant] || "https://github.com/TiGRVoting/V-Website/blob/a880e9d7d71c826ed6beba70983fb6d3f649e7c8/Images/placeholder";
-}
+
 // Call the function to populate Table 1 and Table 2 when the page loads
 window.onload = function() {
     populateTable();
