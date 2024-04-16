@@ -179,6 +179,44 @@ function getImageURL(contestant) {
     // Return the image URL for the given contestant name, or a placeholder URL if not found
     return imageUrls[contestant] || "https://github.com/TiGRVoting/V-Website/blob/a880e9d7d71c826ed6beba70983fb6d3f649e7c8/Images/placeholder";
 }
+
+// Loop through the top voted contestants and create table rows with their information
+topVotedContestants.forEach((topContestant) => {
+    // Create a new row for each top voted contestant
+    const row = document.createElement("tr");
+    
+    // Create cells for the category, contestant name, and votes
+    const categoryCell = document.createElement("td");
+    categoryCell.textContent = topContestant.category;
+    
+    const contestantCell = document.createElement("td");
+    contestantCell.textContent = topContestant.contestant;
+    
+    const votesCell = document.createElement("td");
+    votesCell.textContent = topContestant.votes;
+    
+    // Create an image element for the contestant's photo
+    const imgElement = document.createElement('img');
+    imgElement.src = getImageURL(topContestant.contestant); // Get image URL for the contestant
+    imgElement.alt = topContestant.contestant;
+    
+    // Set some styling for the image element
+    imgElement.style.width = '100px'; // Adjust the width as desired
+    imgElement.style.height = '100px'; // Adjust the height as desired
+    imgElement.style.borderRadius = '5px'; // Optional: adjust the border radius for rounded corners
+    imgElement.style.marginRight = '10px'; // Add margin to separate the image from the text
+
+    // Append the image element before the contestant name in the cell
+    contestantCell.prepend(imgElement);
+    
+    // Append cells to the row
+    row.appendChild(categoryCell);
+    row.appendChild(contestantCell);
+    row.appendChild(votesCell);
+    
+    // Append the row to the table body
+    tbody.appendChild(row);
+});
 // Function to update Table 2 with top-voted contestants for each category
 function updateSecondTable() {
     const topContestants = {};
