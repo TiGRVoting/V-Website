@@ -164,25 +164,28 @@ function updateSecondTable() {
         // Check if the row is a category header (background color is black)
         if (row.cells.length === 1 && row.cells[0].style.backgroundColor === 'black') {
             currentCategory = row.cells[0].textContent.trim();
-            // Initialize top contestant for the category
+            // Initialize top contestants for the category as an array
             topContestants[currentCategory] = [];
         } else if (currentCategory) {
             // Otherwise, consider it as a candidate row
             const candidate = row.cells[0].textContent;
             const votes = parseInt(row.cells[1].textContent);
 
-            if (topContestants[currentCategory].length === 0) {
-                topContestants[currentCategory].push({ contestant: candidate, votes: votes });
+            // Find the top contestant(s) for the category
+            const currentTopContestants = topContestants[currentCategory];
+            if (currentTopContestants.length === 0) {
+                // If there are no contestants recorded yet, add this contestant
+                currentTopContestants.push({ contestant: candidate, votes: votes });
             } else {
-                // Check for ties or more votes
-                const maxVotes = topContestants[currentCategory][0].votes;
-                
+                // Determine if this contestant has more votes than the current top
+                const maxVotes = currentTopContestants[0].votes;
+
                 if (votes > maxVotes) {
-                    // New top vote count, clear existing entries
-                    topContestants[currentCategory] = [{ contestant: candidate, votes: votes }];
+                    // New top vote count, clear existing entries and add new contestant
+                    currentTopContestants.splice(0, currentTopContestants.length, { contestant: candidate, votes: votes });
                 } else if (votes === maxVotes) {
                     // Tie, add the contestant to the list
-                    topContestants[currentCategory].push({ contestant: candidate, votes: votes });
+                    currentTopContestants.push({ contestant: candidate, votes: votes });
                 }
             }
         }
@@ -202,13 +205,14 @@ function updateSecondTable() {
         
         const contestantCell = document.createElement('td');
         
+        // Iterate through all contestants with the same maximum vote count
         topContestantsArray.forEach(topContestant => {
             const contestantNameElement = document.createElement('div');
             contestantNameElement.textContent = topContestant.contestant;
             contestantCell.appendChild(contestantNameElement);
 
             const imgElement = document.createElement('img');
-            imgElement.src = getImageURL(topContestant.contestant);
+            imgElement.src = getImageURL(topContestant.contestant); // You must implement this function to get the correct URL for each contestant
             imgElement.alt = topContestant.contestant;
             imgElement.style.width = '100px';
             imgElement.style.height = '100px';
