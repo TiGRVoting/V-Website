@@ -151,108 +151,112 @@ function populateSecondTable() {
 
 // Function to update Table 2 with top-voted contestants for each category
 // Function to update Table 2 with top-voted contestants for each category
-function updateSecondTable() {
-    const topContestants = {};
+function populateSecondTable() {
+    const secondTableBody = document.getElementById('second-table-body');
+    secondTableBody.innerHTML = ''; // Clear previous data
 
-    // Iterate through the rows of Table 1
+    const topContestants = {}; // Initialize an empty object for top contestants in each category
+
+    // Iterate through the rows of the first table
     let currentCategory = null;
     const tableRows = document.querySelectorAll('#table-body tr');
 
     // Gather top-voted contestants for each category
     for (const row of tableRows) {
-        // Check if the row is a category header (background color is black)
+        // Check if the row is a category header
         if (row.cells.length === 1 && row.cells[0].style.backgroundColor === 'black') {
             currentCategory = row.cells[0].textContent.trim();
-            // Initialize top contestants array for the category
             topContestants[currentCategory] = [];
             continue;
         }
 
         // Otherwise, consider it as a candidate row
         if (currentCategory) {
-            const candidate = row.cells[0].textContent;
+            const candidateName = row.cells[0].textContent;
             const votes = parseInt(row.cells[1].textContent);
 
-            // Check if the candidate has votes
-            if (votes > 0) {
-                // Add candidate to top contestants for the category
-                topContestants[currentCategory].push({ candidate: candidate, votes: votes });
-            }
+            // Store the candidate and their votes in the topContestants object
+            topContestants[currentCategory].push({ candidate: candidateName, votes: votes });
         }
     }
 
-    // Populate the second table with the top-voted candidates' images
-    const secondTableBody = document.getElementById('second-table-body');
-    secondTableBody.innerHTML = ''; // Clear previous data
-
-    // Iterate through the categories and create rows with images for top-voted candidates
+    // Now populate the second table with top-voted contestants
     for (const [category, contestants] of Object.entries(topContestants)) {
-        // Find the corresponding row in the second table
-        const row = secondTableBody.querySelector(`tr td:first-of-type:contains('${category}')`).parentNode;
-        
-        // Create the second cell for the top-voted contestant's names and images
-        const contestantCell = row.querySelector('td:last-of-type');
-        contestantCell.innerHTML = ''; // Clear previous content
+        // Find the contestants with the maximum number of votes in this category
+        const maxVotes = Math.max(...contestants.map(contestant => contestant.votes));
+        const topVotedContestants = contestants.filter(contestant => contestant.votes === maxVotes);
 
-        // Filter contestants with the maximum number of votes
-        const maxVotes = Math.max(...contestants.map(c => c.votes));
-        const topContestantsInCategory = contestants.filter(c => c.votes === maxVotes);
+        // Create a new row for the second table
+        const row = document.createElement('tr');
 
-        // Add names and images for top contestants
-        topContestantsInCategory.forEach(contestant => {
-            // Add top-voted contestant's name
-            const contestantNameElement = document.createElement('div');
-            contestantNameElement.textContent = contestant.candidate;
-            contestantCell.appendChild(contestantNameElement);
+        // Add category cell
+        const categoryCell = document.createElement('td');
+        categoryCell.textContent = category;
+        row.appendChild(categoryCell);
 
-            // Add the image
-            const imgElement = document.createElement('img');
-            imgElement.src = getImageURL(contestant.candidate); // Function to get image URL based on contestant
-            imgElement.alt = contestant.candidate;
-            imgElement.style.width = '100px';
-            imgElement.style.height = '100px';
-            imgElement.style.borderRadius = '5px';
-            imgElement.style.cursor = 'pointer';
-            
-            // Add a click event to enlarge the image to fit the full screen
-            imgElement.addEventListener('click', () => {
-                // Create a full screen modal
-                const modal = document.createElement('div');
-                modal.style.position = 'fixed';
-                modal.style.top = 0;
-                modal.style.left = 0;
-                modal.style.width = '100%';
-                modal.style.height = '100%';
-                modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-                modal.style.display = 'flex';
-                modal.style.justifyContent = 'center';
-                modal.style.alignItems = 'center';
-                modal.style.zIndex = '9999';
+        // Add top-voted contestants cell
+        const contestantCell = document.createElement('td');
+        topVotedContestants.forEach((contestant, index) => {
+            const div = document.createElement('div');
 
-                // Create an enlarged image element
-                const enlargedImg = document.createElement('img');
-                enlargedImg.src = imgElement.src;
-                enlargedImg.alt = imgElement.alt;
-                enlargedImg.style.width = '100%';
-                enlargedImg.style.height = '100%';
-                enlargedImg.style.objectFit = 'contain'; // Maintain aspect ratio and fill screen
-                enlargedImg.style.cursor = 'pointer';
-                
-                // Add a click event to close the modal
-                enlargedImg.addEventListener('click', () => {
-                    document.body.removeChild(modal);
-                });
-                
-                // Append the enlarged image to the modal
-                modal.appendChild(enlargedImg);
-                
-                // Append the modal to the document body
-                document.body.appendChild(modal);
+            // Add the contestant's name
+            const nameDiv = document.createElement('div');
+            nameDiv.textContent = contestant.candidate;
+            div.appendChild(nameDiv);
+
+            // Add the contestant's image
+            const img = document.createElement('img');
+            img.src = getImageURL(contestant.candidate);
+            img.alt = contestant.candidate;
+            img.style.width = '100px';
+            img.style.height = '100px';
+            img.style.borderRadius = '5px';
+            img.style.objectFit = 'cover';
+            img.style.cursor = 'pointer';
+
+            // Add click event for enlarging image
+            img.addEventListener('click', () => {
+                enlargeImage(img);
             });
 
-            contestantCell.appendChild(imgElement);
+            div.appendChild(img);
+
+            // Add the div to the contestant cell
+            contestantCell.appendChild(div);
         });
+
+        row.appendChild(contestantCell);
+        secondTableBody.appendChild(row);
     }
+}
+
+// A utility function to enlarge an image when clicked
+function enlargeImage(imgElement) {
+    const modal = document.createElement('div');
+    modal.style.position = 'fixed';
+    modal.style.top = 0;
+    modal.style.left = 0;
+    modal.style.width = '100%';
+    modal.style.height = '100%';
+    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    modal.style.display = 'flex';
+    modal.style.justifyContent = 'center';
+    modal.style.alignItems = 'center';
+    modal.style.zIndex = '9999';
+
+    const enlargedImg = document.createElement('img');
+    enlargedImg.src = imgElement.src;
+    enlargedImg.alt = imgElement.alt;
+    enlargedImg.style.width = '100%';
+    enlargedImg.style.height = '100%';
+    enlargedImg.style.objectFit = 'contain';
+    enlargedImg.style.cursor = 'pointer';
+    enlargedImg.addEventListener('click', () => {
+        document.body.removeChild(modal);
+    });
+
+    modal.appendChild(enlargedImg);
+    document.body.appendChild(modal);
 }
 // Function to count true values in an object
 function countTrueValues(obj) {
