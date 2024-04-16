@@ -152,6 +152,7 @@ function populateSecondTable() {
 // Function to update Table 2 with top-voted contestants for each category
 // Function to update Table 2 with top-voted contestants for each category
 function updateSecondTable() {
+    console.log("Updating second table...");
     const topContestants = {};
 
     // Iterate through the rows of Table 1
@@ -163,60 +164,58 @@ function updateSecondTable() {
         // Check if the row is a category header (background color is black)
         if (row.cells.length === 1 && row.cells[0].style.backgroundColor === 'black') {
             currentCategory = row.cells[0].textContent.trim();
-            // Initialize top contestants array for the category
+            // Initialize top contestant for the category
             topContestants[currentCategory] = [];
-            continue;
-        }
-
-        // Otherwise, consider it as a candidate row
-        if (currentCategory) {
+        } else if (currentCategory) {
+            // Otherwise, consider it as a candidate row
             const candidate = row.cells[0].textContent;
             const votes = parseInt(row.cells[1].textContent);
 
-            // Check if the candidate has votes
-            if (votes > 0) {
-                // Add candidate to top contestants for the category
-                topContestants[currentCategory].push({ candidate: candidate, votes: votes });
+            if (topContestants[currentCategory].length === 0) {
+                topContestants[currentCategory].push({ contestant: candidate, votes: votes });
+            } else {
+                // Check for ties or more votes
+                const maxVotes = topContestants[currentCategory][0].votes;
+                
+                if (votes > maxVotes) {
+                    // New top vote count, clear existing entries
+                    topContestants[currentCategory] = [{ contestant: candidate, votes: votes }];
+                } else if (votes === maxVotes) {
+                    // Tie, add the contestant to the list
+                    topContestants[currentCategory].push({ contestant: candidate, votes: votes });
+                }
             }
         }
     }
 
-    // Populate the second table with the top-voted candidates' images
+    // Populate the second table with the top-voted candidates' names and images
     const secondTableBody = document.getElementById('second-table-body');
     secondTableBody.innerHTML = ''; // Clear previous data
 
-    // Iterate through the categories and create rows with images for top-voted candidates
-    for (const [category, contestants] of Object.entries(topContestants)) {
-        // Find the corresponding row in the second table
-        const row = secondTableBody.querySelector(`tr td:first-of-type:contains('${category}')`).parentNode;
+    // Iterate through the categories and create rows with top-voted candidates
+    for (const [category, topContestantsArray] of Object.entries(topContestants)) {
+        const row = document.createElement('tr');
         
-        // Create the second cell for the top-voted contestant's names and images
-        const contestantCell = row.querySelector('td:last-of-type');
-        contestantCell.innerHTML = ''; // Clear previous content
-
-        // Filter contestants with the maximum number of votes
-        const maxVotes = Math.max(...contestants.map(c => c.votes));
-        const topContestantsInCategory = contestants.filter(c => c.votes === maxVotes);
-
-        // Add names and images for top contestants
-        topContestantsInCategory.forEach(contestant => {
-            // Add top-voted contestant's name
+        const categoryCell = document.createElement('td');
+        categoryCell.textContent = category;
+        row.appendChild(categoryCell);
+        
+        const contestantCell = document.createElement('td');
+        
+        topContestantsArray.forEach(topContestant => {
             const contestantNameElement = document.createElement('div');
-            contestantNameElement.textContent = contestant.candidate;
+            contestantNameElement.textContent = topContestant.contestant;
             contestantCell.appendChild(contestantNameElement);
 
-            // Add the image
             const imgElement = document.createElement('img');
-            imgElement.src = getImageURL(contestant.candidate); // Function to get image URL based on contestant
-            imgElement.alt = contestant.candidate;
+            imgElement.src = getImageURL(topContestant.contestant);
+            imgElement.alt = topContestant.contestant;
             imgElement.style.width = '100px';
             imgElement.style.height = '100px';
             imgElement.style.borderRadius = '5px';
-            imgElement.style.cursor = 'pointer';
-            
-            // Add a click event to enlarge the image to fit the full screen
+
+            // Add a click event to enlarge the image
             imgElement.addEventListener('click', () => {
-                // Create a full screen modal
                 const modal = document.createElement('div');
                 modal.style.position = 'fixed';
                 modal.style.top = 0;
@@ -229,29 +228,25 @@ function updateSecondTable() {
                 modal.style.alignItems = 'center';
                 modal.style.zIndex = '9999';
 
-                // Create an enlarged image element
                 const enlargedImg = document.createElement('img');
                 enlargedImg.src = imgElement.src;
                 enlargedImg.alt = imgElement.alt;
-                enlargedImg.style.width = '100%';
-                enlargedImg.style.height = '100%';
-                enlargedImg.style.objectFit = 'contain'; // Maintain aspect ratio and fill screen
-                enlargedImg.style.cursor = 'pointer';
-                
-                // Add a click event to close the modal
+                enlargedImg.style.maxWidth = '90%';
+                enlargedImg.style.maxHeight = '90%';
+                enlargedImg.style.objectFit = 'contain';
                 enlargedImg.addEventListener('click', () => {
                     document.body.removeChild(modal);
                 });
-                
-                // Append the enlarged image to the modal
+
                 modal.appendChild(enlargedImg);
-                
-                // Append the modal to the document body
                 document.body.appendChild(modal);
             });
 
             contestantCell.appendChild(imgElement);
         });
+
+        row.appendChild(contestantCell);
+        secondTableBody.appendChild(row);
     }
 }
 // Function to count true values in an object
