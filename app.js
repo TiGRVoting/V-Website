@@ -167,7 +167,7 @@ function getImageURL(contestant) {
         "DHARANNIKA GR": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Dharannika%20GR.JPG",
         "GAURAV AGARWAL": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Gaurav%20Agarwal.JPG",
         "HAASHINI PRIYA CP": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Haashini%20Priya%20CP.JPG",
-        "HARSHAVARDHAN G": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Harshavardhan%20G.JPG",
+        "HARSHAVARDHAN G": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Harshavardhan.JPG",
         "JAYANTH CB": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Jayanth%20CB.JPG",
         "KAVYA SA": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Kavya%20SA.JPG",
         "MAANYA R JAIN": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Maanya%20R%20Jain.JPG",
