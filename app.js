@@ -217,12 +217,12 @@ function updateSecondTable() {
 
     for (const row of tableRows) {
         // Check if the row is a category header
-        if (row.cells[0].style.backgroundColor === 'black') {
+        if (row.cells.length === 1 && row.cells[0].style.backgroundColor === 'black') {
             currentCategory = row.cells[0].textContent.trim();
             topCandidates[currentCategory] = {
                 name: null,
                 votes: 0,
-                declaredWinner: false
+                isDeclaredWinner: false
             };
             continue;
         }
@@ -236,99 +236,92 @@ function updateSecondTable() {
             topCandidates[currentCategory] = {
                 name: candidateName,
                 votes: 0,
-                declaredWinner: true
+                isDeclaredWinner: true
             };
         } else {
             const votes = parseInt(votesText);
-            // Update top candidate for the current category if the votes are greater
+
+            // If the current candidate has more votes than the top candidate in this category, update the top candidate
             if (votes > topCandidates[currentCategory].votes) {
                 topCandidates[currentCategory] = {
                     name: candidateName,
                     votes: votes,
-                    declaredWinner: false
+                    isDeclaredWinner: false
                 };
             }
         }
     }
 
-    // Iterate through each category and populate the second table
+    // Populate the second table with the top-voted candidates or declared winners for each category
     for (const category of categories) {
         const row = document.createElement('tr');
-
-        // Create category cell
         const categoryCell = document.createElement('td');
+        const candidateCell = document.createElement('td');
+
         categoryCell.textContent = category;
 
-        // Create candidate cell
-        const candidateCell = document.createElement('td');
-        
-        // If the category has a top candidate
-        if (topCandidates[category].name) {
-            const candidateNameElement = document.createElement('div');
-            candidateNameElement.textContent = topCandidates[category].name;
+        const topCandidate = topCandidates[category];
+        if (topCandidate && topCandidate.name) {
+            // If there is a top candidate (or declared winner) for this category, display their name and image
+            candidateCell.textContent = topCandidate.name;
 
-            // Create and set the image element
+            // Create and set an image element for the top candidate (or declared winner)
             const imgElement = document.createElement('img');
-            imgElement.src = getImageURL(topCandidates[category].name);
-            imgElement.alt = topCandidates[category].name;
+            imgElement.src = getImageURL(topCandidate.name);
+            imgElement.alt = topCandidate.name;
             imgElement.style.width = '100px';
             imgElement.style.height = '100px';
             imgElement.style.borderRadius = '5px';
             imgElement.style.cursor = 'pointer';
             
-            // Add a click event to enlarge the image to fit the full screen
-            imgElement.addEventListener('click', () => {
-                // Create a full screen modal
-                const modal = document.createElement('div');
-                modal.style.position = 'fixed';
-                modal.style.top = 0;
-                modal.style.left = 0;
-                modal.style.width = '100%';
-                modal.style.height = '100%';
-                modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-                modal.style.display = 'flex';
-                modal.style.justifyContent = 'center';
-                modal.style.alignItems = 'center';
-                modal.style.zIndex = '9999';
-
-                // Create an enlarged image element
-                const enlargedImg = document.createElement('img');
-                enlargedImg.src = imgElement.src;
-                enlargedImg.alt = imgElement.alt;
-                enlargedImg.style.width = '100%';
-                enlargedImg.style.height = '100%';
-                enlargedImg.style.objectFit = 'contain'; // Maintain aspect ratio and fill screen
-                enlargedImg.style.cursor = 'pointer';
-                
-                // Add a click event to close the modal
-                enlargedImg.addEventListener('click', () => {
-                    document.body.removeChild(modal);
-                });
-                
-                // Append the enlarged image to the modal
-                modal.appendChild(enlargedImg);
-                
-                // Append the modal to the body
-                document.body.appendChild(modal);
-            });
-
-            // Append the candidate name and image to the candidate cell
-            candidateCell.appendChild(candidateNameElement);
+            // Add a click event to enlarge the image
+            imgElement.addEventListener('click', () => enlargeImage(imgElement.src, imgElement.alt));
+            
+            // Append the image to the candidate cell
             candidateCell.appendChild(imgElement);
         } else {
             candidateCell.textContent = 'No data';
         }
 
-        // Append cells to the row
         row.appendChild(categoryCell);
         row.appendChild(candidateCell);
-
-        // Append the row to the second table body
         secondTableBody.appendChild(row);
     }
 }
+function enlargeImage(src, alt) {
+    // Create a full screen modal
+    const modal = document.createElement('div');
+    modal.style.position = 'fixed';
+    modal.style.top = 0;
+    modal.style.left = 0;
+    modal.style.width = '100%';
+    modal.style.height = '100%';
+    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    modal.style.display = 'flex';
+    modal.style.justifyContent = 'center';
+    modal.style.alignItems = 'center';
+    modal.style.zIndex = '9999';
 
+    // Create an enlarged image element
+    const enlargedImg = document.createElement('img');
+    enlargedImg.src = src;
+    enlargedImg.alt = alt;
+    enlargedImg.style.width = '100%';
+    enlargedImg.style.height = '100%';
+    enlargedImg.style.objectFit = 'contain'; // Maintain aspect ratio and fill screen
+    enlargedImg.style.cursor = 'pointer';
 
+    // Add a click event to close the modal when the image is clicked
+    enlargedImg.addEventListener('click', () => {
+        document.body.removeChild(modal);
+    });
+
+    // Append the enlarged image to the modal
+    modal.appendChild(enlargedImg);
+    
+    // Append the modal to the body
+    document.body.appendChild(modal);
+}
 
 // Function to extract category from contestant name
 function getCategoryFromContestant(contestant) {
