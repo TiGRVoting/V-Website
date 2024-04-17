@@ -186,141 +186,122 @@ function getImageURL(contestant) {
     return imageUrls[contestant] || "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/placeholder.JPG";
 }
 // Function to update Table 2 with top-voted contestants for each category
-// Function to update Table 2 with top-voted contestants for each category
-// Function to update the second table with top-voted contestants and declared winners
-// Function to update the second table with top-voted candidates and declared winners
 function updateSecondTable() {
-    const secondTableBody = document.getElementById('second-table-body');
-    secondTableBody.innerHTML = ''; // Clear previous data
+    const topContestants = {};
 
-    // Iterate through each category in the second table
-    const categories = [
-        "Boy Prefect",
-        "Girl Prefect",
-        "Student Council",
-        "Pine Captain",
-        "Pine Vice Captain",
-        "Cedar Captain",
-        "Cedar Vice Captain",
-        "Maple Captain",
-        "Maple Vice Captain",
-        "Oak Captain",
-        "Oak Vice Captain"
-    ];
-
-    // Prepare an object to keep track of top-voted candidates and declared winners for each category
-    const topCandidates = {};
-
-    // Iterate through the rows of the first table
-    const tableRows = document.querySelectorAll('#table-body tr');
+    // Iterate through the rows of Table 1
     let currentCategory = null;
+    const tableRows = document.querySelectorAll('#table-body tr');
 
+    // Gather top-voted contestants for each category
     for (const row of tableRows) {
-        // Check if the row is a category header
+        // Check if the row is a category header (background color is black)
         if (row.cells.length === 1 && row.cells[0].style.backgroundColor === 'black') {
             currentCategory = row.cells[0].textContent.trim();
-            topCandidates[currentCategory] = {
-                name: null,
-                votes: 0,
-                isDeclaredWinner: false
-            };
+            // Initialize top contestant for the category
+            topContestants[currentCategory] = { contestant: null, votes: 0 };
             continue;
         }
 
-        // Otherwise, it is a candidate row
-        const candidateName = row.cells[0].textContent;
-        const votesText = row.cells[1].textContent;
+        // Otherwise, consider it as a candidate row
+        if (currentCategory) {
+            const candidate = row.cells[0].textContent;
+            const votes = parseInt(row.cells[1].textContent);
 
-        // Check if the candidate is a declared winner
-        if (votesText === "Declared Winner") {
-            topCandidates[currentCategory] = {
-                name: candidateName,
-                votes: 0,
-                isDeclaredWinner: true
-            };
-        } else {
-            const votes = parseInt(votesText);
-
-            // If the current candidate has more votes than the top candidate in this category, update the top candidate
-            if (votes > topCandidates[currentCategory].votes) {
-                topCandidates[currentCategory] = {
-                    name: candidateName,
-                    votes: votes,
-                    isDeclaredWinner: false
-                };
+            // Check if the candidate has more votes than the current top contestant for the category
+            if (votes > topContestants[currentCategory].votes) {
+                topContestants[currentCategory] = { contestant: candidate, votes: votes };
             }
         }
     }
 
-    // Populate the second table with the top-voted candidates or declared winners for each category
-    for (const category of categories) {
+    // Populate the second table with the top-voted candidates' images
+    const secondTableBody = document.getElementById('second-table-body');
+    secondTableBody.innerHTML = ''; // Clear previous data
+
+    // Iterate through the categories and create rows with images for top-voted candidates
+    for (const [category, topContestant] of Object.entries(topContestants)) {
+        // Create a row for each category
         const row = document.createElement('tr');
+        
+        // Create the first cell for the category
         const categoryCell = document.createElement('td');
-        const candidateCell = document.createElement('td');
-
         categoryCell.textContent = category;
-
-        const topCandidate = topCandidates[category];
-        if (topCandidate && topCandidate.name) {
-            // If there is a top candidate (or declared winner) for this category, display their name and image
-            candidateCell.textContent = topCandidate.name;
-
-            // Create and set an image element for the top candidate (or declared winner)
+        
+        // Create the second cell for the top-voted contestant's name and image
+        const contestantCell = document.createElement('td');
+        if (topContestant.contestant) {
+            // Add top-voted contestant's name
+            const contestantNameElement = document.createElement('div');
+            contestantNameElement.textContent = topContestant.contestant;
+            contestantCell.appendChild(contestantNameElement);
+            
+// In the function where you create the image element
             const imgElement = document.createElement('img');
-            imgElement.src = getImageURL(topCandidate.name);
-            imgElement.alt = topCandidate.name;
+            imgElement.src = getImageURL(topContestant.contestant); // Get image URL based on contestant name
+            imgElement.alt = topContestant.contestant;
             imgElement.style.width = '100px';
             imgElement.style.height = '100px';
             imgElement.style.borderRadius = '5px';
             imgElement.style.cursor = 'pointer';
             
-            // Add a click event to enlarge the image
-            imgElement.addEventListener('click', () => enlargeImage(imgElement.src, imgElement.alt));
-            
-            // Append the image to the candidate cell
-            candidateCell.appendChild(imgElement);
-        } else {
-            candidateCell.textContent = 'No data';
-        }
+            // Append the image to the contestant cell
+            contestantCell.appendChild(imgElement);
 
+            
+            // Add a click event to enlarge the image to fit the full screen
+            imgElement.addEventListener('click', () => {
+                // Create a full screen modal
+                const modal = document.createElement('div');
+                modal.style.position = 'fixed';
+                modal.style.top = 0;
+                modal.style.left = 0;
+                modal.style.width = '100%';
+                modal.style.height = '100%';
+                modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                modal.style.display = 'flex';
+                modal.style.justifyContent = 'center';
+                modal.style.alignItems = 'center';
+                modal.style.zIndex = '9999';
+
+                // Create an enlarged image element
+                const enlargedImg = document.createElement('img');
+                enlargedImg.src = imgElement.src;
+                enlargedImg.alt = imgElement.alt;
+                enlargedImg.style.width = '100%';
+                enlargedImg.style.height = '100%';
+                enlargedImg.style.objectFit = 'contain'; // Maintain aspect ratio and fill screen
+                enlargedImg.style.cursor = 'pointer';
+                
+                // Add a click event to close the modal
+                enlargedImg.addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+                
+                // Append the enlarged image to the modal
+                modal.appendChild(enlargedImg);
+                
+                // Append the modal to the body
+                document.body.appendChild(modal);
+            });
+            
+            // Append the image to the cell
+            contestantCell.appendChild(imgElement);
+        } else {
+            contestantCell.textContent = 'No data';
+        }
+        
+        // Append cells to the row
         row.appendChild(categoryCell);
-        row.appendChild(candidateCell);
+        row.appendChild(contestantCell);
+        
+        // Append the row to the second table body
         secondTableBody.appendChild(row);
     }
 }
-function enlargeImage(src, alt) {
-    // Create a full screen modal
-    const modal = document.createElement('div');
-    modal.style.position = 'fixed';
-    modal.style.top = 0;
-    modal.style.left = 0;
-    modal.style.width = '100%';
-    modal.style.height = '100%';
-    modal.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-    modal.style.display = 'flex';
-    modal.style.justifyContent = 'center';
-    modal.style.alignItems = 'center';
-    modal.style.zIndex = '9999';
-
-    // Create an enlarged image element
-    const enlargedImg = document.createElement('img');
-    enlargedImg.src = src;
-    enlargedImg.alt = alt;
-    enlargedImg.style.width = '100%';
-    enlargedImg.style.height = '100%';
-    enlargedImg.style.objectFit = 'contain'; // Maintain aspect ratio and fill screen
-    enlargedImg.style.cursor = 'pointer';
-
-    // Add a click event to close the modal when the image is clicked
-    enlargedImg.addEventListener('click', () => {
-        document.body.removeChild(modal);
-    });
-
-    // Append the enlarged image to the modal
-    modal.appendChild(enlargedImg);
-    
-    // Append the modal to the body
-    document.body.appendChild(modal);
+// Function to count true values in an object
+function countTrueValues(obj) {
+    return Object.values(obj).filter(value => value === true).length;
 }
 
 // Function to extract category from contestant name
