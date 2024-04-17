@@ -186,6 +186,7 @@ function getImageURL(contestant) {
     return imageUrls[contestant] || "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/placeholder.JPG";
 }
 // Function to update Table 2 with top-voted contestants for each category
+// Function to update Table 2 with top-voted contestants for each category
 function updateSecondTable() {
     const topContestants = {};
 
@@ -236,7 +237,7 @@ function updateSecondTable() {
             contestantNameElement.textContent = topContestant.contestant;
             contestantCell.appendChild(contestantNameElement);
             
-// In the function where you create the image element
+            // Add image element
             const imgElement = document.createElement('img');
             imgElement.src = getImageURL(topContestant.contestant); // Get image URL based on contestant name
             imgElement.alt = topContestant.contestant;
@@ -247,7 +248,6 @@ function updateSecondTable() {
             
             // Append the image to the contestant cell
             contestantCell.appendChild(imgElement);
-
             
             // Add a click event to enlarge the image to fit the full screen
             imgElement.addEventListener('click', () => {
@@ -288,7 +288,24 @@ function updateSecondTable() {
             // Append the image to the cell
             contestantCell.appendChild(imgElement);
         } else {
-            contestantCell.textContent = 'No data';
+            // Check if the category has a declared winner
+            const maskAsDeclaredWinner = (category === "Boy Prefect" || category === "Cedar Vice Captain" || category === "Maple Vice Captain");
+            if (maskAsDeclaredWinner) {
+                // If it's a single-candidate category, consider it as declared winner
+                const declaredWinnerName = Names[category.toLowerCase()] || "Declared Winner";
+                const imgElement = document.createElement('img');
+                imgElement.src = getImageURL(declaredWinnerName); // Get image URL based on declared winner name
+                imgElement.alt = declaredWinnerName;
+                imgElement.style.width = '100px';
+                imgElement.style.height = '100px';
+                imgElement.style.borderRadius = '5px';
+                imgElement.style.cursor = 'pointer';
+                
+                // Append the image to the contestant cell
+                contestantCell.appendChild(imgElement);
+            } else {
+                contestantCell.textContent = 'No data';
+            }
         }
         
         // Append cells to the row
@@ -299,10 +316,7 @@ function updateSecondTable() {
         secondTableBody.appendChild(row);
     }
 }
-// Function to count true values in an object
-function countTrueValues(obj) {
-    return Object.values(obj).filter(value => value === true).length;
-}
+
 
 // Function to extract category from contestant name
 function getCategoryFromContestant(contestant) {
