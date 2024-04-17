@@ -156,35 +156,34 @@ function populateSecondTable() {
         secondTableBody.appendChild(row);
     });
 }
-
 function getImageURL(contestant) {
-    // Define a dictionary of contestant names and their image URLs
+    // Define a dictionary of contestant names and their updated image URLs
     const imageUrls = {
-        "ADHAV K": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Aadhav%20K.JPG",
-        "ADITYA ASHOK": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Aditya%20Ashok.JPG",
-        "ARNAV": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Arnav.JPG",
-        "ATHULVINAYAK PRADEEP": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Athul%20Vinayak%20Pradeep.JPG",
-        "DHAIRYA BAGRI": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Dhairya%20Bagri.JPG",
-        "DHARANNIKA GR": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Dharannika%20GR.JPG",
-        "GAURAV AGARWAL": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Gaurav%20Agarwal.JPG",
-        "HAASHINI PRIYA CP": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Haashini%20Priya%20CP.JPG",
-        "HARSHAVARDHAN G": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Harshavardhan%20G.JPG",
-        "JAYANTH CB": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Jayanth%20CB.JPG",
-        "KAVYA SA": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Kavya%20SA.JPG",
-        "MAANYA R JAIN": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Maanya%20R%20Jain.JPG",
-        "MAHI KISHORE SETHIA": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Mahi%20Kishore%20Sethia.JPG",
-        "NAMRRUTHA S": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Namrrutha%20S.JPG",
-        "NEBIN BOSE B": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Nebin%20Bose%20B.JPG",
-        "PRANITHA PRABU": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Pranitha%20Prabu.JPG",
-        "RISHAAN R RANKA": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Rishaan%20R%20Ranka.JPG",
-        "SHASHANG R": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Shashang%20R.JPG",
-        "SIVNETHRAN SK": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Sivnethran%20SK.JPG",
-        "SREE SHRAVAN K": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Sree%20Shravan%20K.JPG",
-        "VINAYA SELVARAJ": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Vinaya%20Selvaraj.JPG"
+        "ADHAV K": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Aadhav%20K.JPG",
+        "ADITYA ASHOK": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Aditya%20Ashok.JPG",
+        "ARNAV": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Arnav.JPG",
+        "ATHULVINAYAK PRADEEP": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Athul%20Vinayak%20Pradeep.JPG",
+        "DHAIRYA BAGRI": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Dhairya%20Bagri.JPG",
+        "DHARANNIKA GR": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Dharannika%20GR.JPG",
+        "GAURAV AGARWAL": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Gaurav%20Agarwal.JPG",
+        "HAASHINI PRIYA CP": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Haashini%20Priya%20CP.JPG",
+        "HARSHAVARDHAN G": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Harshavardhan%20G.JPG",
+        "JAYANTH CB": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Jayanth%20CB.JPG",
+        "KAVYA SA": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Kavya%20SA.JPG",
+        "MAANYA R JAIN": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Maanya%20R%20Jain.JPG",
+        "MAHI KISHORE SETHIA": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Mahi%20Kishore%20Sethia.JPG",
+        "NAMRRUTHA S": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Namrrutha%20S.JPG",
+        "NEBIN BOSE B": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Nebin%20Bose%20B.JPG",
+        "PRANITHA PRABU": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Pranitha%20Prabu.JPG",
+        "RISHAAN R RANKA": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Rishaan%20R%20Ranka.JPG",
+        "SHASHANG R": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Shashang%20R.JPG",
+        "SIVNETHRAN SK": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Sivnethran%20SK.JPG",
+        "SREE SHRAVAN K": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Sree%20Shravan%20K.JPG",
+        "VINAYA SELVARAJ": "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/Vinaya%20Selvaraj.JPG"
     };
 
     // Return the image URL for the given contestant name, or a placeholder URL if not found
-    return imageUrls[contestant] || "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/placeholder.JPG";
+    return imageUrls[contestant] || "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/placeholder.JPG";
 }
 // Function to update Table 2 with top-voted contestants for each category
 function updateSecondTable() {
