@@ -58,7 +58,7 @@ const Names = {
     "pine_vc_cont3": "Pine Vice Captain 3",
     "pine_vc_cont4": "Pine Vice Captain 4",
     "prefect_boy_cont1": "HARSHAVARDHAN G",
-    "prefect_boy_cont2": "SANJAY R",
+    "prefect_boy_cont2": "Prefect Boy 2",
     "prefect_boy_cont3": "Prefect Boy 3",
     "prefect_boy_cont4": "Prefect Boy 4",
     "prefect_girl_cont1": "MAANYA R JAIN",
@@ -79,7 +79,7 @@ function populateTable() {
 
         // Define categories and their respective contestants
         const categoryContestants = {
-            "Boy Prefect": ["prefect_boy_cont1", "prefect_boy_cont2"],
+            "Boy Prefect": ["prefect_boy_cont1"],
             "Girl Prefect": ["prefect_girl_cont1", "prefect_girl_cont2" ],
             "Student Council": ["student_council_cont1", "student_council_cont2", "student_council_cont3"],
             "Pine Captain": ["pine_captain_cont1", "pine_captain_cont2"],
@@ -169,7 +169,6 @@ function getImageURL(contestant) {
         "NEBIN BOSE B": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Nebin%20Bose%20B.JPG",
         "PRANITHA PRABU": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Pranitha%20Prabu.JPG",
         "RISHAAN R RANKA": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Rishaan%20R%20Ranka.JPG",
-        "SANJAY R": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Sanjay%20R.JPG",
         "SHASHANG R": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Shashang%20R.JPG",
         "SIVNETHRAN SK": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Sivnethran%20SK.JPG",
         "SREE SHRAVAN K": "https://raw.githubusercontent.com/TiGRVoting/V-Website/bfe567fb2f43b5a68c338de1f1a23d3a033e52a7/Images/Sree%20Shravan%20K.JPG",
