@@ -80,7 +80,7 @@ function populateTable() {
         // Define categories and their respective contestants
         const categoryContestants = {
             "Boy Prefect": ["prefect_boy_cont1"],
-            "Girl Prefect": ["prefect_girl_cont1", "prefect_girl_cont2" ],
+            "Girl Prefect": ["prefect_girl_cont1", "prefect_girl_cont2"],
             "Student Council": ["student_council_cont1", "student_council_cont2", "student_council_cont3"],
             "Pine Captain": ["pine_captain_cont1", "pine_captain_cont2"],
             "Pine Vice Captain": ["pine_vc_cont1", "pine_vc_cont2"],
@@ -96,7 +96,15 @@ function populateTable() {
         Object.entries(categoryContestants).forEach(([category, contestants]) => {
             const categoryVotes = contestants.map(contestant => {
                 const candidateName = Names[contestant] || contestant;
-                const votes = countTrueValues(snapshot.val()[contestant]);
+                
+                // Check if this category is one with only one candidate
+                const maskAsDeclaredWinner = (category === "Boy Prefect" && contestants.length === 1) ||
+                                             (category === "Cedar Vice Captain" && contestants.length === 1) ||
+                                             (category === "Maple Vice Captain" && contestants.length === 1);
+                
+                // Calculate votes or set as "Declared Winner" for single-candidate categories
+                const votes = maskAsDeclaredWinner ? "Declared Winner" : countTrueValues(snapshot.val()[contestant]);
+
                 return `<tr><td>${candidateName}</td><td>${votes}</td></tr>`;
             }).join(""); // Join contestant votes for this category into a single string
 
