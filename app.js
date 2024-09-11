@@ -70,6 +70,23 @@ const Names = {
     "student_council_cont3": "GAURAV AGARWAL",
     "student_council_cont4": "Student Council 4"
 };
+const currentTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', currentTheme);
+
+// Function to toggle dark mode
+function toggleDarkMode() {
+    let theme = document.documentElement.getAttribute('data-theme');
+    if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+    }
+}
+
+// Add event listener to toggle button
+document.getElementById('theme-toggle').addEventListener('click', toggleDarkMode);
 
 // Function to fetch data and populate table
 function populateTable() {
@@ -123,8 +140,6 @@ function populateTable() {
 }
 
 // Function to populate the second table with top-voted contestants in each category
-// Function to populate the second table with top-voted contestants in each category
-// Function to populate the second table with top-voted contestants in each category
 function populateSecondTable() {
     const secondTableBody = document.getElementById('second-table-body');
     secondTableBody.innerHTML = ''; // Clear previous data
@@ -156,6 +171,8 @@ function populateSecondTable() {
         secondTableBody.appendChild(row);
     });
 }
+
+// Function to get image URL for a contestant
 function getImageURL(contestant) {
     // Define a dictionary of contestant names and their updated image URLs
     const imageUrls = {
@@ -185,6 +202,7 @@ function getImageURL(contestant) {
     // Return the image URL for the given contestant name, or a placeholder URL if not found
     return imageUrls[contestant] || "https://raw.githubusercontent.com/TiGRVoting/V-Website/main/Images/placeholder.JPG";
 }
+
 // Function to update Table 2 with top-voted contestants for each category
 function updateSecondTable() {
     // Dictionary to keep track of declared winners and top-voted contestants
