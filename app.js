@@ -70,20 +70,28 @@ const Names = {
     "student_council_cont3": "GAURAV AGARWAL",
     "student_council_cont4": "Student Council 4"
 };
+// Initialize theme based on localStorage
 const currentTheme = localStorage.getItem('theme') || 'light';
 document.documentElement.setAttribute('data-theme', currentTheme);
+console.log(`Initial theme set to: ${currentTheme}`);  // Debugging line
 
 // Function to toggle dark mode
 function toggleDarkMode() {
     let theme = document.documentElement.getAttribute('data-theme');
+    console.log(`Current theme: ${theme}`);  // Debugging line
     if (theme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'light');
         localStorage.setItem('theme', 'light');
+        console.log('Switched to light mode');  // Debugging line
     } else {
         document.documentElement.setAttribute('data-theme', 'dark');
         localStorage.setItem('theme', 'dark');
+        console.log('Switched to dark mode');  // Debugging line
     }
 }
+
+// Add event listener to toggle button
+document.getElementById('theme-toggle').addEventListener('click', toggleDarkMode);
 
 // Add event listener to toggle button
 document.getElementById('theme-toggle').addEventListener('click', toggleDarkMode);
